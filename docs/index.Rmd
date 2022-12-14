@@ -1,0 +1,51 @@
+---
+title: "Curso de Anlaisis Estadistico enfocado a Estudios Ecologicos"
+autor: David Murillo
+output:
+  html_document:
+    df_print: paged
+---
+
+
+Bienvenidos este curso esta disenado para los profesionales, estudiastes y personas interesadas en Ecologia. 
+
+## Contenido del curso
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+[Introduccion al curso](Introduccion.html)
+
+[Clase 1: Comandos basicos en R y uso de scripts](Clase1.html)
+
+[Clase 2: Analisis de Diversidad](Clase2.html)
+
+[Clase 3: Correlacion y Analisi de Variaza](Clase3.html)
+
+[Clase 4: Modelos Lineales](Clase4.html)
+
+[Clase 5: Modelos lineales Generalizados: Poisson](Clase5.html)
+
+[Clase 6: Modelos lineales Generalizados: Binomial](Clase6.html)
+
+[Clase 7: Anaisis de escalado multidemencional y PCA](Clase7.html)
+
+[Clase 8: Analisis de similitud, Permanova, MRPP e Indicador de especies](Clase8.html)
+
+[Clase 9: Repaso, Preguntas y respuestas](Clase9.html)
+
+
+
+
+
+
+
+
+
+
+
+
+

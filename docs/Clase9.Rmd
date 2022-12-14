@@ -1,0 +1,8 @@
+---
+title: 'Clase 9: Repaso, Preguntas y respuestas'
+output:
+  html_document:
+    df_print: paged
+---
+
+Proximamente...

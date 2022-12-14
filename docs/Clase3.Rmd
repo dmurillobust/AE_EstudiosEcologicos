@@ -1,0 +1,8 @@
+---
+title: 'Clase 3: Correlacion y Analisi de Variaza'
+output:
+  html_document:
+    df_print: paged
+---
+
+Proximamente...

@@ -1,0 +1,8 @@
+---
+title: 'Clase 7: Anaisis de escalado multidemencional y PCA'
+output:
+  html_document:
+    df_print: paged
+---
+
+Proximamente...

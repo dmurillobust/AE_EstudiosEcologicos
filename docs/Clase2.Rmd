@@ -1,0 +1,8 @@
+---
+title: 'Clase 2: Analisis de Diversidad'
+output:
+  html_document:
+    df_print: paged
+---
+
+Proximamente...

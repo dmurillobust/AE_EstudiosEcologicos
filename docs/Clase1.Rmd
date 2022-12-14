@@ -1,0 +1,8 @@
+---
+title: 'Clase 1: Comandos basicos en R y uso de scripts'
+output:
+  html_document:
+    df_print: paged
+---
+
+Proximamente...

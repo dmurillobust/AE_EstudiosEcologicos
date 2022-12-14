@@ -1,0 +1,8 @@
+---
+title: 'Clase 8: Analisis de similitud, Permanova, MRPP e Indicador de especies'
+output:
+  html_document:
+    df_print: paged
+---
+
+Proximamente...
