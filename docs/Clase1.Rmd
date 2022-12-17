@@ -1,8 +1,103 @@
 ---
 title: 'Clase 1: Comandos basicos en R y uso de scripts'
-output:
-  html_document:
-    df_print: paged
+output: 
+       html_document:
+         css: custom.css
 ---
 
-Proximamente...
+Esta clase esta disenada para aprender los comandos basicos en R, la creacion de variables, tablas, el ingreso de base de datos y analisis exploracion de datos.
+
+
+### Contenido {.tabset .tabset-pills}
+
+#### Operaciones Basicas
+
+- Addicion (suma)
+
+```{r}
+2 + 2
+```
+
+
+- Substraccion (resta)
+
+```{r}
+2 - 2
+```
+
+- Multiplicacion
+
+```{r}
+2 * 2
+```
+
+- Divicion
+
+```{r}
+2 / 2
+```
+
+- Raiz cuadrada
+
+::: {.notes}
+
+Observe que para la raiz cuadrada se utiliza el comando `sqrt` y el valor del que se quiere obtener la raiz cuadrada se coloca dentro de los parentesis `( )`.
+
+```{r}
+sqrt(2)
+```
+
+:::
+
+Ahora que conocemos algunas de las operaciones basicas, podemos resolver algunos ejercicios.
+
+:::{.notes}
+
+**Ejercicio 1**
+
+Utilizando la ecuacion de regresion linear, para la cual la `pendiente` tiene un valor de 0.3 y el `intercepto` un valor de 34.5, resolver cuanto seria el valor de `y` si `x` vale 36.4.
+
+  $y = intercepto + slope(x)$
+
+Solucion:
+
+```{r}
+34.5 + 0.3*36.4
+```
+
+
+:::
+
+#### Creacion de variables
+
+Comencemos creando variables numericas con un unico valor
+
+```{r}
+x <- 5 # En este caso, x tendra el valor de 5
+```
+
+
+```{r}
+y <- -3 # Y en este, y tendra el valor de -3
+```
+
+:::{.notes}
+
+Si queremos crear variables numericas con varios valores, tendremos que crear un vector utilizando el comando `c()`, en donde cada valor estara separa por coma.
+
+```{r}
+Peso <- c(12.5, 23, 12.6, 18, 7, 18.3, 23, 40, 21,8)
+```
+
+Observe que en este caso las comas se parados los valores, y los puntos solo se utilizan para las cifras decimales. La variable `Peso` tendra 10 observaciones.
+
+Otra forma de crear un vector es utilizando el signo `:` entre los valores del incio y final.
+
+```{r}
+
+Altura <- c(1:1000)
+```
+
+En este caso la variable `Altura` tendra 1000 observaciones
+
+:::
