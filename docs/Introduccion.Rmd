@@ -5,4 +5,7 @@ output:
     df_print: paged
 ---
 
-Proximamente...
+Por favor visite el sitio web oficial de `HN Biology Investigation` para que pueda acceder a los materiales, grabaciones de clases.
+
+Sitio web: [Curso oficial](https://www.hnbiology.org/analisisestadisticoecologia)
+

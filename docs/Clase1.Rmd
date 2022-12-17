@@ -101,3 +101,144 @@ Altura <- c(1:1000)
 En este caso la variable `Altura` tendra 1000 observaciones
 
 :::
+
+Ahora, como podes crear una variable con numeros aleatorios?, como podemos crear una variable con distribucion normal?
+
+:::{.notes}
+
+**Variable con numeros alatorios**
+
+Primero podriamos utilizar el comando `sample()` para crear numeros aletorios sin una distribucion en especifica, dando el numero de incio y final, y la cantidad de observaciones que deseamos.
+
+```{r}
+Aleatorios <- sample(1:1000, size = 50)
+```
+
+En este ejemplo observe que, 1 y 1000 es el rango entre el cual estaran 50 observaciones.
+
+**Variable con distribucion normal**
+
+Podemos crear variables con una distribucion normal utilizando el comando `rnorm()`, en este caso tendremos que especificar la media y la desviacion estandar.
+
+```{r}
+Dnormal <- rnorm(50, mean = 30, sd = 2.5)
+```
+
+Para este ejemplo, hemos creado 50 observaciones, con una media de 30 y una desviacion estandar de 2.5
+
+:::
+
+
+El siguiente paso es la creacion de varibales categorias, variables que incluyen `categorias`. Para crear una variable de categorias tendremos que colocar cada observacion entre comillas `" "`
+
+```{r}
+Variabley <- "y"
+```
+
+En este ejemplo la `variabley` solo tiene la observacion `y`. Si queros mas observaciones podemos utilizar el comando `c()`.
+
+```{r}
+Seccion <- c("1A", "1B", "3A", "2B", "2A", "3A")
+```
+
+#### Cracion de tablas
+
+Ya que sabemos como crear variables numericas y categoricas, ahora podemos crear tablas, para crear una tabla en R debemos de asegurar que nuestras variables presenten la misma cantidad de observaciones.
+
+:::{.notes}
+
+**Creacion de tabla con 10 observaciones**
+
+Primero crearemos nuestras variables
+
+```{r}
+Temperatura <- sample(20:35, 10)
+
+Riqueza <- rnorm(10, mean = 5, sd= 3)
+
+Franja <- c("A", "A", "C", "C", "A", "B", "B", "B", "A", "C")
+```
+
+Ahora utilizando el comando `data.frame()` podemos crear nuestra tabla
+
+```{r}
+Tabla1 <- data.frame(Franja, Temperatura, Riqueza)
+```
+
+
+Observemos nuestra primera tabla
+
+```{r, echo=FALSE}
+
+knitr::kable(Tabla1)
+```
+
+:::
+
+#### Exploracion de datos
+
+Primero podemos hacer exploracion rapido de nuestra primera tabla utilizando el comando `summary()`
+
+Observe que cuando ejecutamos el comando summary obtenemos la media, quartiles, y algunos otros detalles de cada variable en nuestra tabla
+
+```{r}
+
+summary(Tabla1)
+```
+
+
+Si nos interesa la media, podemos utilizar el comando `mean()`, para la desviciaon estandar usamos `ds()`, para la mediana `median()`.
+
+```{r}
+mean(Tabla1$Temperatura)
+```
+
+```{r}
+median(Tabla1$Temperatura)
+```
+
+```{r}
+
+sd(Tabla1$Temperatura)
+
+```
+
+
+Si nos interesa una grafico exploratorio, podemos usar el comando `plot()` para una nube de puntos, `boxplot()` para un grafico de cajas, y `hist()` para un histograma.
+
+
+```{r}
+plot(Tabla1$Temperatura)
+```
+
+
+```{r}
+boxplot(Tabla1$Temperatura)
+```
+
+
+```{r}
+hist(Tabla1$Temperatura)
+```
+
+:::
+
+#### Cargar base de datos
+
+Para cargar una base de datos de nuestra pc, necesitamos sabe exactamente la hubicacion de la base de datos. Por ejemplo para cargar la base de datos `bird.sta` que se encuetra en la carpeta `data`, de nuestro proyecto de R. Podemos usar el comando `read.csv()` ya que esta base de datos esta delimitada por coma.
+
+:::{.notes}
+
+**Ejemplo para cargar una base de datos**
+
+```{r, eval=FALSE}
+
+Aves.sta <- read.csv("data/bird.sta.csv")
+```
+
+Observe que el nombre de la base de datos es `bird.sta`, el formato es `.csv` y se encuentra en la carpeta `data`, esta base de datos fue guardada en `Aves.sta` en nuestro ambiente en R
+
+:::
+
+
+
