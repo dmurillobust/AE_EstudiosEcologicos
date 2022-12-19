@@ -5,43 +5,43 @@ output:
          css: custom.css
 ---
 
-Esta clase esta disenada para aprender los comandos basicos en R, la creacion de variables, tablas, el ingreso de base de datos y analisis exploracion de datos.
+Esta clase esta diseñada para aprender los comandos básicos en R, la creación de variables, tablas, el ingreso de base de datos y análisis exploración de datos.
 
 
 ### Contenido {.tabset .tabset-pills}
 
 #### Operaciones Basicas
 
-- Addicion (suma)
+- Adición (suma)
 
 ```{r}
 2 + 2
 ```
 
 
-- Substraccion (resta)
+- Sustracción (resta)
 
 ```{r}
 2 - 2
 ```
 
-- Multiplicacion
+- Multiplicación 
 
 ```{r}
 2 * 2
 ```
 
-- Divicion
+- División
 
 ```{r}
 2 / 2
 ```
 
-- Raiz cuadrada
+- Raíz cuadrada  
 
 ::: {.notes}
 
-Observe que para la raiz cuadrada se utiliza el comando `sqrt` y el valor del que se quiere obtener la raiz cuadrada se coloca dentro de los parentesis `( )`.
+Observe que para la raíz cuadrada se utiliza el comando `sqrt` y el valor del que se quiere obtener la raíz cuadrada se coloca dentro de los paréntesis `( )`.
 
 ```{r}
 sqrt(2)
@@ -49,17 +49,17 @@ sqrt(2)
 
 :::
 
-Ahora que conocemos algunas de las operaciones basicas, podemos resolver algunos ejercicios.
+Ahora que conocemos algunas de las operaciones básicas, podemos resolver algunos ejercicios.
 
 :::{.notes}
 
 **Ejercicio 1**
 
-Utilizando la ecuacion de regresion linear, para la cual la `pendiente` tiene un valor de 0.3 y el `intercepto` un valor de 34.5, resolver cuanto seria el valor de `y` si `x` vale 36.4.
+Utilizando la ecuación de regresión linear, para la cual la `pendiente` tiene un valor de 0.3 y el `intercepto` un valor de 34.5, resolver cuanto sería el valor de `y` si `x` vale 36.4.
 
   $y = intercepto + slope(x)$
 
-Solucion:
+Solución:
 
 ```{r}
 34.5 + 0.3*36.4
@@ -68,74 +68,75 @@ Solucion:
 
 :::
 
-#### Creacion de variables
+#### Creación de variables
 
-Comencemos creando variables numericas con un unico valor
+Comencemos creando variables numéricas con un único valor
 
 ```{r}
-x <- 5 # En este caso, x tendra el valor de 5
+x <- 5 # En este caso, x tendrá el valor de 5
 ```
 
 
 ```{r}
-y <- -3 # Y en este, y tendra el valor de -3
+y <- -3 # En este caso, y tendrá el valor de -3
 ```
 
 :::{.notes}
 
-Si queremos crear variables numericas con varios valores, tendremos que crear un vector utilizando el comando `c()`, en donde cada valor estara separa por coma.
+Si queremos crear variables numéricas con varios valores, tendremos que crear un vector utilizando el comando `c()`, en donde cada valor estará separa por coma.
 
 ```{r}
 Peso <- c(12.5, 23, 12.6, 18, 7, 18.3, 23, 40, 21,8)
 ```
 
-Observe que en este caso las comas se parados los valores, y los puntos solo se utilizan para las cifras decimales. La variable `Peso` tendra 10 observaciones.
+Observe que en este caso las comas se parados los valores, y los puntos solo se utilizan para las cifras decimales. La variable `Peso` tendrá 10 observaciones.
 
-Otra forma de crear un vector es utilizando el signo `:` entre los valores del incio y final.
+Otra forma de crear un vector es utilizando el signo `:` entre los valores del inicio y final.
+
 
 ```{r}
 
 Altura <- c(1:1000)
 ```
 
-En este caso la variable `Altura` tendra 1000 observaciones
+En este caso la variable `Altura` tendrá 1000 observaciones
 
 :::
 
-Ahora, como podes crear una variable con numeros aleatorios?, como podemos crear una variable con distribucion normal?
+Ahora, ¿cómo podemos crear una variable con números aleatorios?, como podemos crear una variable con distribución normal?
 
 :::{.notes}
 
 **Variable con numeros alatorios**
 
-Primero podriamos utilizar el comando `sample()` para crear numeros aletorios sin una distribucion en especifica, dando el numero de incio y final, y la cantidad de observaciones que deseamos.
+Primero podríamos utilizar el comando `sample()` para crear números aleatorios sin una distribución en especifica, dando el número de inicio y final, y la cantidad de observaciones que deseamos.
 
 ```{r}
 Aleatorios <- sample(1:1000, size = 50)
 ```
 
-En este ejemplo observe que, 1 y 1000 es el rango entre el cual estaran 50 observaciones.
+En este ejemplo observe que, 1 y 1000 es el rango entre el cual estarán 50 observaciones.
 
 **Variable con distribucion normal**
 
-Podemos crear variables con una distribucion normal utilizando el comando `rnorm()`, en este caso tendremos que especificar la media y la desviacion estandar.
+Podemos crear variables con una distribución normal utilizando el comando `rnorm()`, en este caso tendremos que especificar la media y la desviación estándar.
 
 ```{r}
 Dnormal <- rnorm(50, mean = 30, sd = 2.5)
 ```
 
-Para este ejemplo, hemos creado 50 observaciones, con una media de 30 y una desviacion estandar de 2.5
+Para este ejemplo, hemos creado 50 observaciones, con una media de 30 y una desviación estándar de 2.5
 
 :::
 
 
-El siguiente paso es la creacion de varibales categorias, variables que incluyen `categorias`. Para crear una variable de categorias tendremos que colocar cada observacion entre comillas `" "`
+El siguiente paso es la creación de variables categorías, variables que incluyen `categorias`. Para crear una variable de categorías tendremos que colocar cada observación entre comillas `" "`
 
 ```{r}
 Variabley <- "y"
 ```
 
-En este ejemplo la `variabley` solo tiene la observacion `y`. Si queros mas observaciones podemos utilizar el comando `c()`.
+En este ejemplo la `variabley` solo tiene la observación `y`. Si quermos más observaciones podemos utilizar el comando `c()`.
 
 ```{r}
 Seccion <- c("1A", "1B", "3A", "2B", "2A", "3A")
@@ -143,11 +144,11 @@ Seccion <- c("1A", "1B", "3A", "2B", "2A", "3A")
 
 #### Cracion de tablas
 
-Ya que sabemos como crear variables numericas y categoricas, ahora podemos crear tablas, para crear una tabla en R debemos de asegurar que nuestras variables presenten la misma cantidad de observaciones.
+Ya que aprendimos como crear variables numéricas y categóricas, ahora podemos crear tablas. Para crear una tabla en R debemos de asegurar que nuestras variables presenten la misma cantidad de observaciones.
 
 :::{.notes}
 
-**Creacion de tabla con 10 observaciones**
+**Creación de tabla con 10 observaciones**
 
 Primero crearemos nuestras variables
 
@@ -177,9 +178,9 @@ knitr::kable(Tabla1)
 
 #### Exploracion de datos
 
-Primero podemos hacer exploracion rapido de nuestra primera tabla utilizando el comando `summary()`
+Primero podemos hacer exploración rápido de nuestra primera tabla utilizando el comando `summary()` 
 
-Observe que cuando ejecutamos el comando summary obtenemos la media, quartiles, y algunos otros detalles de cada variable en nuestra tabla
+Observe que cuando ejecutamos el comando `summary()` obtenemos la media, cuartiles, y algunos otros detalles de cada variable en nuestra tabla
 
 ```{r}
 
@@ -187,7 +188,7 @@ summary(Tabla1)
 ```
 
 
-Si nos interesa la media, podemos utilizar el comando `mean()`, para la desviciaon estandar usamos `ds()`, para la mediana `median()`.
+Si nos interesa obtener solo la media podemos utilizar el comando `mean()`, para la desviación estándar usamos `sd()`, y para la mediana `median()`.
 
 ```{r}
 mean(Tabla1$Temperatura)
@@ -204,7 +205,7 @@ sd(Tabla1$Temperatura)
 ```
 
 
-Si nos interesa una grafico exploratorio, podemos usar el comando `plot()` para una nube de puntos, `boxplot()` para un grafico de cajas, y `hist()` para un histograma.
+Si nos interesa una gráfico exploratorio, podemos usar el comando `plot()` para una nube de puntos, `boxplot()` para un gráfico de cajas, y `hist()` para un histograma.
 
 
 ```{r}
@@ -225,7 +226,8 @@ hist(Tabla1$Temperatura)
 
 #### Cargar base de datos
 
-Para cargar una base de datos de nuestra pc, necesitamos sabe exactamente la hubicacion de la base de datos. Por ejemplo para cargar la base de datos `bird.sta` que se encuetra en la carpeta `data`, de nuestro proyecto de R. Podemos usar el comando `read.csv()` ya que esta base de datos esta delimitada por coma.
+Para cargar una base de datos de nuestro pc, necesitamos sabe exactamente la ubicación de la base de datos. Por ejemplo para cargar la base de datos `bird.sta` que se encuentra en la carpeta `data`, de nuestro proyecto de R. Podemos usar el comando `read.csv()` ya que esta base de datos está delimitada por coma.
+
 
 :::{.notes}
 
