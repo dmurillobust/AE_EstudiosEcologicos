@@ -365,3 +365,58 @@ kable(head(Riqueza_abundancia))
 ```
 
 :::
+
+
+#### Indices de diversidad{.tabset .tabset-pills}
+
+##### Indice de Simson
+
+El índice de diversidad de Simpson es una medida de la diversidad de especies en una comunidad o en un área determinada. Se utiliza para evaluar la riqueza de especies y la evenness (igualdad) en la distribución de las poblaciones de especies en un área determinada.
+
+El índice de diversidad de Simpson se calcula sumando las probabilidades de encontrar dos individuos de cada especie al azar en una muestra, y luego tomando el inverso de esta suma. Matemáticamente, el índice de diversidad de Simpson se puede expresar como:
+
+$D = 1 / Σ(n / N)^2$
+
+Donde:
+
+- D es el índice de diversidad de Simpson
+- n es el número de individuos de cada especie en la muestra
+- N es el número total de individuos en la muestra
+- Σ es la sumatoria de todas las especies presentes en la muestra
+
+El índice de diversidad de Simpson es una medida relativa y su valor puede variar entre 0 y 1, donde un valor más cercano a 1 indica una mayor diversidad de especies y una mayor igualdad en la distribución de las poblaciones de especies. El índice de diversidad de Simpson se utiliza comúnmente en la ecología y la conservación de la biodiversidad para evaluar la riqueza de especies y la estabilidad de los ecosistemas.
+
+para estimar el indice de simpson podemos utilizar el comando `diversity()` del paquete `vegan`
+
+
+```{r}
+Diversidad_simpson <- diversity(bird[,4:81], index = "simpson")
+
+head(Diversidad_simpson)
+```
+
+##### Indice de Shannon
+
+El índice de Shannon es una medida de la diversidad de especies en una comunidad o en un área determinada. Se utiliza para evaluar la riqueza de especies y la evenness (igualdad) en la distribución de las poblaciones de especies en un área determinada.
+
+El índice de Shannon se calcula sumando la entropía de cada especie en la muestra y luego multiplicando esta suma por el inverso de la entropía máxima posible. Matemáticamente, el índice de Shannon se puede expresar como:
+
+$H = -Σ(n / N) * ln(n / N)$
+
+Donde:
+
+- H es el índice de Shannon
+- n es el número de individuos de cada especie en la muestra
+- N es el número total de individuos en la muestra
+- Σ es la sumatoria de todas las especies presentes en la muestra
+
+El índice de Shannon es una medida relativa y su valor puede variar entre 0 y ln(S), donde S es el número de especies presentes en la muestra. Un valor más alto del índice de Shannon indica una mayor diversidad de especies y una mayor igualdad en la distribución de las poblaciones de especies. El índice de Shannon se utiliza comúnmente en la ecología y la conservación de la biodiversidad para evaluar la riqueza de especies y la estabilidad de los ecosistemas.
+
+para estimar el indice de simpson podemos utilizar el comando `diversity()` del paquete `vegan`
+
+
+```{r}
+Diversidad_shannon <- diversity(bird[,4:81], index = "shannon")
+
+head(Diversidad_shannon)
+```
