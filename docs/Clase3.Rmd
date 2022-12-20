@@ -1,8 +1,134 @@
 ---
 title: 'Clase 3: Correlacion y Analisi de Variaza'
 output:
-  html_document:
-    df_print: paged
+   html_document:
+         css: custom.css
 ---
 
-Proximamente...
+
+### Contenido{.tabset .tabset-pills}
+
+#### Distribucion Normal
+
+La distribución normal es una distribución de probabilidad continuamente distribuida que se utiliza comúnmente en el análisis de datos. Esta distribución es symmetric (simétrica) y tiene una forma de campana, con un pico en el centro y una cola que se extiende hacia los valores extremos.
+
+Para los ejercicios de esta clase utilizaremos la base de datos `delomys.csv`
+
+```{r, eval=FALSE}
+
+delomys <- read.csv("data/delomys.csv")
+```
+
+```{r, echo=FALSE}
+
+library(here)
+library(knitr)
+
+delomys <- read.csv(here("data", "delomys.csv"))
+```
+
+```{r}
+kable(head(delomys))
+```
+
+Como se puede observar la base de datos `delomys` presenta varias variables, si queremos sabe si alguna variable en especifico presenta distribucion normal pode utilizar la prueba de shapiro o realizar un grafico cuartil-cuartil.
+
+**Prueba de shapiro **
+
+Es importante tener en cuenta que la prueba de normalidad de Shapiro no es infalible y puede dar resultados incorrectos si el tamaño de la muestra es pequeño. Por lo general, se recomienda un tamaño de muestra de al menos 30 para utilizar la prueba de normalidad de Shapiro de manera fiable. Además, la prueba de normalidad de Shapiro puede ser sensible a los valores extremos o anómalos en los datos, por lo que puede ser necesario eliminar estos valores antes de realizar la prueba.
+
+```{r}
+shapiro.test(delomys$body_mass)
+```
+Un gráfico de cuartil-cuartil, también conocido como gráfico Q-Q, es una herramienta gráfica utilizada para evaluar si un conjunto de datos sigue una distribución específica. En el caso de una distribución normal, se esperaría que los datos se ajusten a una línea recta en el gráfico.
+
+```{r, fig.align='center'}
+
+library(car)
+
+qqPlot(delomys$body_mass)
+
+```
+
+Es importante tener en cuenta que el gráfico de cuartil-cuartil es solo una herramienta visual y no proporciona una medida cuantitativa de la normalidad de los datos. Para obtener una medida cuantitativa, se puede utilizar una prueba estadística como la prueba de normalidad de Shapiro.
+
+#### Análisis de correlación
+
+El análisis de correlación es una técnica estadística que se utiliza para determinar si hay una relación entre dos variables. Esta relación se puede medir utilizando el coeficiente de correlación, que puede variar entre -1 y 1. Un coeficiente de correlación cercano a 1 indica una correlación positiva fuerte, lo que significa que a medida que una de las variables aumenta, la otra también aumenta de manera predecible. Un coeficiente de correlación cercano a -1 indica una correlación negativa fuerte, lo que significa que a medida que una de las variables aumenta, la otra disminuye de manera predecible. Un coeficiente de correlación cercano a 0 indica una correlación débil o nula entre las variables.
+
+**Prueba de correlación de pearson**
+
+```{r}
+cor.test(delomys$body_mass, delomys$body_length)
+```
+
+**Prueba de correlación de spearman**
+
+```{r}
+cor.test(delomys$body_mass, delomys$body_length, method = "spearman")
+```
+
+**Grafico de correlacion**
+
+
+```{r}
+library(ggplot2)
+
+ggplot(data= delomys, aes(x =body_length, y= body_mass))+
+  geom_point()+
+  theme_classic()
+```
+
+
+#### Análisis de varianza{.tabset .tabset-pilss}
+
+El análisis de varianza (ANOVA) es una técnica estadística que se utiliza para evaluar si hay diferencias significativas entre dos o más grupos en una variable. Se utiliza comúnmente para comparar los resultados de diferentes tratamientos o grupos de estudio en un experimento.
+
+
+##### ANOVA de una vía 
+
+El análisis de varianza (ANOVA) de una vía es una técnica estadística utilizada para evaluar si hay diferencias significativas entre dos o más grupos en una sola variable. El ANOVA de una vía se utiliza cuando se tienen dos o más grupos y se quiere evaluar si hay diferencias significativas en una sola medida o variable.
+
+
+```{r}
+table(delomys$status)
+
+ANOVA_status <- aov(body_mass ~ status, data= delomys)
+summary(ANOVA_status)
+
+```
+
+##### ANOVA de dos vías 
+
+El análisis de varianza (ANOVA) de dos vías es un método estadístico que se utiliza para comparar las diferencias entre dos o más grupos en una medida de interés. Se llama "ANOVA de dos vías" porque examina dos factores a la vez, cada uno de los cuales puede tener varios niveles o categorías. 
+
+```{r}
+table(delomys$status, delomys$sex)
+
+ANOVA_status_sex <- aov(body_mass ~ status + sex, data= delomys)
+summary(ANOVA_status_sex)
+
+```
+
+##### MANOVA
+
+El análisis multivariado de varianza (MANOVA) es un método estadístico que se utiliza para comparar las diferencias entre dos o más grupos en múltiples medidas al mismo tiempo. A diferencia del análisis de varianza (ANOVA), que se utiliza para comparar diferencias entre grupos en una sola medida, el MANOVA se utiliza para comparar diferencias en varias medidas simultáneamente.
+
+```{r}
+
+delomys_manova <- manova(cbind(body_mass, body_length) ~ sex + status, data = delomys)
+
+summary(delomys_manova)
+```
+
+##### ANCOVA
+
+El análisis de covarianza (ANCOVA) es un método estadístico que se utiliza para comparar las diferencias entre dos o más grupos en una medida de interés, teniendo en cuenta el efecto de una o más variables covariables. Una variable covariable es una variable que puede afectar el resultado de interés y que se mide o observa al mismo tiempo que el resultado de interés.
+
+
+```{r}
+delomys_ancova <- Anova(lm(body_mass ~ sex + status + body_length, data = delomys))
+
+delomys_ancova
+```
+
