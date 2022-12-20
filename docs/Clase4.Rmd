@@ -2,7 +2,7 @@
 title: 'Clase 4: Modelos Lineales'
 output:
   html_document:
-    df_print: paged
+         css: custom.css
 ---
 
-Proximamente...
+Los modelos lineales son una clase de modelos estadísticos que se utilizan para describir la relación entre una variable dependiente y una o más variables independientes. Los modelos lineales asumen que la relación entre las variables es lineal, es decir, que la variación en la variable dependiente se puede explicar de manera lineal a través de la variación en las variables independientes.
