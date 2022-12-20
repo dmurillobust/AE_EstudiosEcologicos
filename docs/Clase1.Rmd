@@ -242,5 +242,49 @@ Observe que el nombre de la base de datos es `bird.sta`, el formato es `.csv` y 
 
 :::
 
+#### Estadistica descriptiva
+
+Para los siguientes ejemplos utilizaremos la base de datos `penguins` del paquete `palmerpenguins`
 
 
+:::{.notes} 
+
+**Cargar la base de datos penguins**
+
+Primero debemos cargar el paquete `palmerpenguins`
+
+```{r}
+library(palmerpenguins)
+```
+
+Una vez cargada el paquete podemos cargar a la base de datos `penguins`
+
+```{r}
+data("penguins")
+```
+
+:::
+
+
+:::{.notes}
+
+Calcular la media de cada columna del data frame
+
+```{r}
+sapply(penguins[, 3:6], mean, na.rm = TRUE)
+```
+
+Observe que que estamos seleccionando la columna 3 a la 6 (ya que contienen variables numericas), y el nar.rm = TRUE, es para que reconosca que existen NA en nuestra base de datos.
+
+:::
+
+:::{.notes}
+
+Calcular la media de la masa de los pingüinos para cada especie
+
+```{r}
+tapply(penguins$body_mass_g, penguins$species, mean, na.rm =TRUE )
+```
+Observe que que estamos seleccionando la columna `body_mass_g` para estimar la media condicionada por la variable `species`, el nar.rm = TRUE, es para que reconosca que existen NA en nuestra base de datos.
+
+:::
