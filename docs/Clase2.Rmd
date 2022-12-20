@@ -2,7 +2,366 @@
 title: 'Clase 2: Analisis de Diversidad'
 output:
   html_document:
-    df_print: paged
+         css: custom.css
 ---
 
-Proximamente
+
+El contenido de esta clase se basara mayoritariamente en el libro `Community Ecology Analytical Methods Using R and Excel` by `Mark Gardener`
+
+### Contenido{.tabset .tabset-pills}
+
+
+#### Diversidad: Riqueza de especies.
+
+Riqueza de especie se refiere simplemente al numero de especies que hay en un area determinada. Para estimar la riqueza de especie solo requiere tener una lista de las especies observadas.
+
+La riqueza de especies puede ser usada coma variable respuesta (dependiente) en varios analisis, sin embargo, para realizarlo hay que asegurarse que el esfuerzo de muestreo es el mismo para todas las replicas. Una vez hemos tomado en cuenta el `problema` de esfuerzo de muestreo, hay dos formas de analisar la riqueza de especies.
+
+- Comparar differencias en la riqueza de especie con alguna variable (categorica)
+
+- Correlacionar la riqueza de especie con alguna variable (numerica)
+
+
+Primero vamos a cargar la base de datos `bird.sta.csv` para estimar la riqueza de especie por sitio de estudio.
+
+
+```{r, eval=FALSE}
+
+bird <- read.csv("data/bird.sta.csv")
+```
+
+```{r, echo=FALSE, include=FALSE}
+
+library(here)
+library(knitr)
+
+bird <- read.csv(here("data", "bird.sta.csv"))
+
+```
+
+
+
+**Estimar la riqueza de especie por cada unidad de muestreo**
+
+:::{.notes}
+
+En nuestra base de datos `bird` cada fila corresponde a un esfuerzo de muestreo. Para poder estimar la riqueza de especie utilizaremos el paquete `vegan`.
+
+- Instalar paquete `vegan`
+
+```{r, eval=FALSE}
+install.packages("vegan")
+```
+
+- Cargar el paquete `vegan`
+
+```{r}
+library(vegan)
+```
+
+-  Utilizaremos el comando specnumber para estimar la riqueza de especie por unidad de muestreo
+
+```{r}
+Riqueza <- specnumber(bird[,4:81])
+
+head(Riqueza)
+```
+
+Observe que hemos creado la variable `Riqueza` la cual contiene la riqueza de especie para cada una de las filas de nuestra base de datos `bird`. El comando `head()` nos permite visualizar las primeras 6 observaciones.
+
+:::
+
+
+
+**Estimar la riqueza de especie por la variable basin**
+
+:::{.notes}
+
+- Ahora Utilizaremos el comando specnumber condicionada por la variable `basin`.
+
+```{r}
+RiquezaBasin <- specnumber(bird[,4:81], bird$basin)
+
+RiquezaBasin
+
+```
+
+Como se puede observar tenemos obtenemos tres numeros (65, 68, 65 ), estos hace referencia a la riqueza de especie para basin D, L y N respectivamente.  
+
+:::
+
+#### Comparando riqueza de especies
+
+Una simple comparacion de espcies solamente es posible cuando hay equivalencia en el esfuerzo de muestreo.
+
+Un unico valor de riqueza de especie no es suficiente para una comparacion, por lo que tendremos que recurir a tecnicas estadisticas para saber si en realidad la riqueza de especie entre basin difiere.
+
+
+
+**Riqueza de especie por basin (visual )**
+
+:::{.notes}
+
+Comencemos con una comparacion visual utilizando un grafico de caja
+
+```{r, include=FALSE}
+Basin <- data.frame(Basin = bird$basin,
+                    Riqueza = specnumber(bird[,4:81]))
+
+
+```
+
+```{r, echo=FALSE}
+
+head(Basin)
+```
+
+Observe que ahora tenemos varios valores de riqueza por basin.
+
+para realizar la grafica de caja utilizaremos el comando `boxplot()`
+
+```{r}
+boxplot(Riqueza ~ Basin, data= Basin,
+        main = "Riqueza de especie por basin")
+```
+
+
+Que podemos concluir con este grafico de caja?
+
+:::
+
+
+
+**Riqueza de especie por basin (numerico) **
+
+:::{.notes}
+
+Como la grafica de caja no muestra una diferencia marcada, vamos a intentar ser un poco mas descriptivos utilizando valores de tendencia central y dispersion.
+
+Comenzemos estimando la media de la riqueza de especie por basin
+
+```{r}
+tapply(Basin$Riqueza, Basin$Basin, mean)
+```
+Al parecer el basin N presenta una media ligeramente mayor que basin D y L, pero tenemos que revisar el error estandard. Para esto utilizaremos el paquete `FSA`
+
+```{r}
+library(FSA)
+
+BasinRiqueza <- Summarize(Riqueza ~ Basin, data = Basin)
+```
+
+Como se puede observar obtenimos una tabla con la cantidad de muestras (n) y desviacion standart (sd), esto nos permitira estimar el error estandar y los intervalos de confianza.
+
+```{r}
+BasinRiqueza$ES <- BasinRiqueza$sd / sqrt(BasinRiqueza$n)
+
+BasinRiqueza$IC95 <- 1.96 * BasinRiqueza$sd / sqrt(BasinRiqueza$n)
+
+
+```
+
+```{r, echo=FALSE}
+
+kable(BasinRiqueza)
+
+```
+
+
+Ahora que tenemos la media e intervalos de confianza podemos generar un grafico de caja modificado, utilizando el paquete `ggplot2`
+
+```{r, fig.align='center'}
+
+library(ggplot2)
+
+ggplot(data= BasinRiqueza, aes(x = Basin, y= mean)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = mean - IC95,
+                    ymax = mean + IC95)) +
+  labs(title = "Riqueza de especie por basin",
+       subtitle = "Intervalos de confianza al 95%",
+       y = "Riqueza")+
+  theme_classic()
+
+```
+
+Que podemos concluir con este grafico de que utiliza la media e intervalos de confianza la 95% ?
+
+:::
+
+#### Riqueza de especie y esfuerzo de muestreo
+
+Por ahora hemos realizado algunos analisis sin tomar en cuenta la cantidad de muestras por sitio, una forma de solucionar esto es utilizando una curva de acumulacion de especies.
+
+*La curva de acumulación de especies es un gráfico que muestra la relación entre el número de especies de una comunidad y el tamaño de la muestra del área en la que se encuentran. Se utiliza comúnmente en la ecología para entender cómo varía la biodiversidad en diferentes áreas y cómo afecta a la estabilidad y funcionamiento de los ecosistemas.*
+
+*La curva de acumulación de especies se construye mediante el muestreo sistemático de un área y el registro del número de especies que se encuentran en cada muestra. A medida que se aumenta el tamaño de la muestra, se espera que el número de especies encontradas aumente también, pero a un ritmo decreciente. Esto se debe a que, a medida que se aumenta el tamaño de la muestra, es más probable que se incluyan especies raras y poco comunes, lo que se refleja en un aumento más lento del número de especies a medida que se aumenta el tamaño de la muestra.*
+
+*La curva de acumulación de especies puede ser útil para comparar la biodiversidad de diferentes áreas y para entender cómo la diversidad de especies afecta a la estabilidad y el funcionamiento de los ecosistemas. También puede ser utilizada para predecir el número total de especies en un área determinada y para identificar áreas con alta biodiversidad que pueden ser prioritarias para la conservación.*
+
+
+**Curva de acumulacion de especie**
+
+:::{.notes}
+
+Para realizar la curva de acumulacion de especie necesitamos utilizar el comando `specaccum()` del paquete `vegan`
+
+```{r}
+Riqueza <- specaccum(bird[,4:81], method = "exact")
+```
+
+- Para visualizar la curva de acumulacion de especies nececitaremos utilizar el comando `plo()`
+
+```{r, fig.align='center'}
+plot(Riqueza, 
+     ci.type = "poly",
+     ci.col = "gray",
+     ci.lty = 0,
+     col= "black",
+     main = "Curva de acumulacion de especies",
+     ylab = "Riqueza",
+     xlab= "Esfuerzo de muestreo")
+```
+
+
+:::
+
+**Comparacion de riqueza con curva de acumulacion de especie**
+
+:::{.notes}
+
+Para realizar una comparacion de riqueza con una curva de acumulacion de especies, necesitaremos realizar algunas pasos extras
+
+- Primero separar nuestra tabla `bird` por catergoria de `basin`
+
+```{r}
+table(bird$basin)
+```
+
+Observe que tenemos tres categorias D, L y N
+
+```{r}
+D <- subset(bird, basin == "D")
+L <- subset(bird, basin == "L")
+N <- subset(bird, basin == "N")
+```
+
+- Ahora estimamos la curva de acumulacion de especie por basin
+
+```{r}
+rar_D <- specaccum(D[,4:81], method = "exact")
+
+rar_L <- specaccum(L[,4:81], method = "exact")
+
+rar_N <- specaccum(N[,4:81], method = "exact")
+
+```
+
+- Creamos un data frame para cada una de las categorias de basin
+
+```{r}
+D_df <- data.frame(Basin = "D",
+                   Riqueza = rar_D$richness,
+                   DS = rar_D$sd,
+                   Esfuerzo = rar_D$sites)
+
+L_df <- data.frame(Basin = "L",
+                   Riqueza = rar_L$richness,
+                   DS = rar_L$sd,
+                   Esfuerzo = rar_L$sites)
+
+N_df <- data.frame(Basin = "N",
+                   Riqueza = rar_N$richness,
+                   DS = rar_N$sd,
+                   Esfuerzo = rar_N$sites)
+```
+
+
+- Ahora combinamos nuestras tablas
+
+
+```{r}
+Basin_df <- rbind(D_df, L_df, N_df)
+```
+
+- Necesitamos estimar los intervalos de confinza al 95%
+
+```{r}
+Basin_df$IC95 <- 1.96 * Basin_df$DS / sqrt(1)
+```
+
+- Por ultimo realizamos nuetro grafico con ggplot
+
+```{r, fig.align='center'}
+
+ggplot(data= Basin_df, aes(x= Esfuerzo, y= Riqueza, fill = Basin))+
+  geom_line()+
+  geom_ribbon(aes(ymin = Riqueza - IC95,
+                  ymax = Riqueza + IC95),
+              alpha = 0.4) +
+  theme_classic() +
+  labs(title = "Curva de acumulacion de especie")
+```
+
+Que podemos concluir con este grafico?
+
+
+:::
+
+
+#### Estimando la riqueza de especie total
+
+Generalmente cuando realizamos muestreos no registramos algunas especies, en especial las especies raras. Hay varias tecnicas para estimar la riqueza de especie total en un sitio, estos metodos se pueden dividir en dos:
+
+- Estimaciones basadas en incidencia: *Este metodo utiliza la frecuencia de especies por sitios*
+
+- Estimaciones basadas en abundancia: *Este metodo utilizada el conteo de especies en un sitio dado*
+
+**Estimaciones basadas en incidencia**
+
+:::{.notes}
+
+Son utiles cuando se tienen datos de presencia-ausencia, y tambien se pueden utilizar cuando tenemos abundancias.
+
+Pueden ser calculados utilizando el comando `specpool()` del paquete `vegan`
+
+
+```{r}
+Riqueza_incidencia <- specpool(bird[,4:81], pool = bird$basin)
+
+```
+
+
+```{r, echo=FALSE}
+kable(Riqueza_incidencia)
+```
+
+
+Haremos un grafico rapido
+
+```{r}
+plot(poolaccum(bird[,4:81]))
+```
+
+:::
+
+**Estimaciones basadas en abundancia**
+
+:::{.notes}
+
+Cuando se tienen datos de abundancia se pueden utilizar diferenctes tecnicas y estimadores para la riqueza de especies total para cada sitio.
+
+Pueden ser calculados utilizando el comando `estimateR` del paquete `vegan`
+
+```{r}
+Riqueza_abundancia <- estimateR(bird[,4:81])
+
+Riqueza_abundancia <- data.frame <- t(Riqueza_abundancia)
+
+```
+
+```{r, echo=FALSE}
+kable(head(Riqueza_abundancia))
+```
+
+:::
