@@ -41,7 +41,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-
+![HN Biology Investigation](imagenes/HNBI2_LOGO.jpg)
 
 
 
