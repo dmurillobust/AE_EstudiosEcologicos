@@ -27,7 +27,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 [Clase 4: Pruebas no parametricas](Clase4.html)
 
-[Clase 5: Modelos lineales Generalizados: Poisson](Clase5.html)
+[Clase 5: Modelos lineales](Clase5.html)
 
 [Clase 6: Modelos lineales Generalizados: Poisson](Clase6.html)
 
