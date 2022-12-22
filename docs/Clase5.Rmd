@@ -1,31 +1,79 @@
 ---
-title: 'Clase 5: Modelos lineales Generalizados: Poisson'
+title: 'Clase 5: Modelos lineales'
 output:
   html_document:
     df_print: paged
 ---
 
-Los modelos lineales generalizados (GLM) son una clase de modelos estadísticos que se utilizan para describir la relación entre una variable dependiente y una o más variables independientes. A diferencia de los modelos lineales tradicionales, los modelos lineales generalizados no asumen que la relación entre las variables es lineal y permiten la utilización de una distribución de error no normal para la variable dependiente.
+Los modelos lineales son un tipo de modelo estadístico utilizado para predecir el valor de una variable de interés (la variable dependiente) a partir de uno o más variables predictivas (las variables independientes). Los modelos lineales se basan en la suposición de que la relación entre la variable dependiente y las variables independientes es lineal.
 
-Los modelos lineales generalizados se basan en el concepto de un modelo de respuesta generalizado, que es una función matemática que describe la relación entre la variable dependiente y las variables independientes. El modelo de respuesta generalizado incluye una función de enlace, que describe cómo la media de la variable dependiente varía con la variación de las variables independientes, y una función de varianza, que describe cómo la varianza de la variable dependiente varía con la media.
 
-La distribución de Poisson es una distribución de probabilidad discreta que se utiliza para modelar el número de eventos que ocurren en un intervalo de tiempo o un espacio dado. La distribución de Poisson se caracteriza por un solo parámetro, llamado tasa de eventos o tasa de Poisson, que describe la frecuencia esperada de eventos en el intervalo de tiempo o espacio dado.
+### Contenido{.tabset .tabset-pills}
 
-### Contenido {.tabset .tabset-pills}
+#### Informacion de los datos
 
-Creacion del modeloS
+```{r, include=FALSE}
 
-#### Creando modelos candidatos
+library(here)
+creeps <- read.table(here("data", "creeps.txt"), header = T)
 
-#### Seleccion de modelo con Criterio de Informacion de Akaike
+```
 
-#### Validacion de modelo
+Para esta clase utilizaremos la base de datos `creeps.txt`, observe que esta base de datos est en formato .txt
 
-#### Grafico de modelo
+```{r, eval=FALSE}
 
-#### Distribucion Binomial Negativo
+creeps <- read.table("data/creeps.txt"), header = T)
 
-#### Modelo Zero-inflacion
+```
 
+Visualisemos nuestra base de datos
+
+```{r}
+head(creeps)
+```
+
+- elevation: promedio de la elevacion a lo largo del sitio 
+- road.dens: desidad de caminos en el sitio 
+- stream.den: desnisdad que quebradas en el sitio
+- mps.CS: promedio de tamano de parche, tomando en cuenta composision y estructura de vegetacion 
+- mps.S: : promedio de tamano de parche, tomando en cuenta estructura de vegetacion 
+- contagion: una medidad de conectividad general del mosaico de parches basados en mps.s
+- conifer: porcentaje de paisage compuesto de bosque de coniferas
+- saw: porcentaje de paisage compuesto de large sawtimber (late-seral)
+- pole: porcentaje de paisage compuesto de pole timber (mid-seral)
+- sapling: porcentaje de paisage compuesto de saplings (early-seral)
+
+#### Modelo lineal simple
+
+#### Modelo lineal multiple
+
+#### Modelo lineal con interaccion
+
+#### Seleccion de modelo usando AIC
+
+#### Interpretacion del modelo mas adecuado
+
+#### Validacion de modelo{.tabset .tabset}
+
+Los modelos lineales se basan en ciertos supuestos acerca de los datos y la relación entre la variable dependiente y las variables independientes. Estos supuestos son:
+
+Linealidad: La relación entre la variable dependiente y las variables independientes es lineal. Esto significa que el cambio en la variable dependiente es proporcional al cambio en las variables independientes.
+
+Homoscedasticidad: La varianza de la variable dependiente es constante a lo largo de los diferentes valores de las variables independientes.
+
+Independencia de errores: Los errores (la diferencia entre el valor real y el valor predecido) son independientes entre sí.
+
+Normalidad de errores: Los errores siguen una distribución normal.
+
+Es importante tener en cuenta que si estos supuestos no se cumplen, los resultados del modelo lineal pueden ser inexactos o poco fiables. Por lo tanto, es importante verificar que estos supuestos se cumplen antes de utilizar un modelo lineal.
+
+##### Distribucion de residuales
+
+##### Homogeneidad de residuales
+
+##### Colinealidad
+
+#### Grafica
 
 

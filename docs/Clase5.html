@@ -11,7 +11,7 @@
 
 
 
-<title>Clase 5: Modelos lineales Generalizados: Poisson</title>
+<title>Clase 5: Modelos lineales</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1621,53 +1621,98 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Clase 5: Modelos lineales Generalizados:
-Poisson</h1>
+<h1 class="title toc-ignore">Clase 5: Modelos lineales</h1>
 
 </div>
 
 
-<p>Los modelos lineales generalizados (GLM) son una clase de modelos
-estadísticos que se utilizan para describir la relación entre una
-variable dependiente y una o más variables independientes. A diferencia
-de los modelos lineales tradicionales, los modelos lineales
-generalizados no asumen que la relación entre las variables es lineal y
-permiten la utilización de una distribución de error no normal para la
-variable dependiente.</p>
-<p>Los modelos lineales generalizados se basan en el concepto de un
-modelo de respuesta generalizado, que es una función matemática que
-describe la relación entre la variable dependiente y las variables
-independientes. El modelo de respuesta generalizado incluye una función
-de enlace, que describe cómo la media de la variable dependiente varía
-con la variación de las variables independientes, y una función de
-varianza, que describe cómo la varianza de la variable dependiente varía
-con la media.</p>
-<p>La distribución de Poisson es una distribución de probabilidad
-discreta que se utiliza para modelar el número de eventos que ocurren en
-un intervalo de tiempo o un espacio dado. La distribución de Poisson se
-caracteriza por un solo parámetro, llamado tasa de eventos o tasa de
-Poisson, que describe la frecuencia esperada de eventos en el intervalo
-de tiempo o espacio dado.</p>
+<p>Los modelos lineales son un tipo de modelo estadístico utilizado para
+predecir el valor de una variable de interés (la variable dependiente) a
+partir de uno o más variables predictivas (las variables
+independientes). Los modelos lineales se basan en la suposición de que
+la relación entre la variable dependiente y las variables independientes
+es lineal.</p>
 <div id="contenido" class="section level3 tabset tabset-pills">
 <h3 class="tabset tabset-pills">Contenido</h3>
-<p>Creacion del modeloS</p>
-<div id="creando-modelos-candidatos" class="section level4">
-<h4>Creando modelos candidatos</h4>
+<div id="informacion-de-los-datos" class="section level4">
+<h4>Informacion de los datos</h4>
+<p>Para esta clase utilizaremos la base de datos
+<code>creeps.txt</code>, observe que esta base de datos est en formato
+.txt</p>
+<pre class="r"><code>creeps &lt;- read.table(&quot;data/creeps.txt&quot;), header = T)</code></pre>
+<p>Visualisemos nuestra base de datos</p>
+<pre class="r"><code>head(creeps)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["abund"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["elevation"],"name":[2],"type":["int"],"align":["right"]},{"label":["road.dens"],"name":[3],"type":["int"],"align":["right"]},{"label":["stream.den"],"name":[4],"type":["int"],"align":["right"]},{"label":["mps.CS"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["mps.S"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["contagion"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["conifer"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["saw"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["pole"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["sapling"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.02857143","2":"635","3":"19","4":"29","5":"17.19","6":"58.43","7":"55.79","8":"56.61","9":"0.71","10":"93.61","11":"0.00","_rn_":"1"},{"1":"0.43750000","2":"533","3":"1","4":"28","5":"22.54","6":"61.98","7":"67.14","8":"64.02","9":"80.15","10":"19.85","11":"0.00","_rn_":"2"},{"1":"0.37837838","2":"396","3":"11","4":"32","5":"10.04","6":"22.39","7":"70.66","8":"49.20","9":"43.44","10":"49.18","11":"0.00","_rn_":"3"},{"1":"0.55882353","2":"342","3":"18","4":"32","5":"17.93","6":"35.87","7":"46.25","8":"31.41","9":"57.23","10":"30.75","11":"0.00","_rn_":"4"},{"1":"0.34285714","2":"369","3":"30","4":"30","5":"11.80","6":"16.97","7":"69.44","8":"29.30","9":"24.46","10":"33.24","11":"27.15","_rn_":"5"},{"1":"0.28125000","2":"327","3":"34","4":"38","5":"11.91","6":"25.01","7":"67.52","8":"5.54","9":"39.89","10":"28.69","11":"17.40","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
-<div id="seleccion-de-modelo-con-criterio-de-informacion-de-akaike" class="section level4">
-<h4>Seleccion de modelo con Criterio de Informacion de Akaike</h4>
+<ul>
+<li>elevation: promedio de la elevacion a lo largo del sitio</li>
+<li>road.dens: desidad de caminos en el sitio</li>
+<li>stream.den: desnisdad que quebradas en el sitio</li>
+<li>mps.CS: promedio de tamano de parche, tomando en cuenta composision
+y estructura de vegetacion</li>
+<li>mps.S: : promedio de tamano de parche, tomando en cuenta estructura
+de vegetacion</li>
+<li>contagion: una medidad de conectividad general del mosaico de
+parches basados en mps.s</li>
+<li>conifer: porcentaje de paisage compuesto de bosque de coniferas</li>
+<li>saw: porcentaje de paisage compuesto de large sawtimber
+(late-seral)</li>
+<li>pole: porcentaje de paisage compuesto de pole timber
+(mid-seral)</li>
+<li>sapling: porcentaje de paisage compuesto de saplings
+(early-seral)</li>
+</ul>
 </div>
-<div id="validacion-de-modelo" class="section level4">
-<h4>Validacion de modelo</h4>
+<div id="modelo-lineal-simple" class="section level4">
+<h4>Modelo lineal simple</h4>
 </div>
-<div id="grafico-de-modelo" class="section level4">
-<h4>Grafico de modelo</h4>
+<div id="modelo-lineal-multiple" class="section level4">
+<h4>Modelo lineal multiple</h4>
 </div>
-<div id="distribucion-binomial-negativo" class="section level4">
-<h4>Distribucion Binomial Negativo</h4>
+<div id="modelo-lineal-con-interaccion" class="section level4">
+<h4>Modelo lineal con interaccion</h4>
 </div>
-<div id="modelo-zero-inflacion" class="section level4">
-<h4>Modelo Zero-inflacion</h4>
+<div id="seleccion-de-modelo-usando-aic" class="section level4">
+<h4>Seleccion de modelo usando AIC</h4>
+</div>
+<div id="interpretacion-del-modelo-mas-adecuado" class="section level4">
+<h4>Interpretacion del modelo mas adecuado</h4>
+</div>
+<div id="validacion-de-modelo" class="section level4 tabset">
+<h4 class="tabset tabset">Validacion de modelo</h4>
+<p>Los modelos lineales se basan en ciertos supuestos acerca de los
+datos y la relación entre la variable dependiente y las variables
+independientes. Estos supuestos son:</p>
+<p>Linealidad: La relación entre la variable dependiente y las variables
+independientes es lineal. Esto significa que el cambio en la variable
+dependiente es proporcional al cambio en las variables
+independientes.</p>
+<p>Homoscedasticidad: La varianza de la variable dependiente es
+constante a lo largo de los diferentes valores de las variables
+independientes.</p>
+<p>Independencia de errores: Los errores (la diferencia entre el valor
+real y el valor predecido) son independientes entre sí.</p>
+<p>Normalidad de errores: Los errores siguen una distribución
+normal.</p>
+<p>Es importante tener en cuenta que si estos supuestos no se cumplen,
+los resultados del modelo lineal pueden ser inexactos o poco fiables.
+Por lo tanto, es importante verificar que estos supuestos se cumplen
+antes de utilizar un modelo lineal.</p>
+<div id="distribucion-de-residuales" class="section level5">
+<h5>Distribucion de residuales</h5>
+</div>
+<div id="homogeneidad-de-residuales" class="section level5">
+<h5>Homogeneidad de residuales</h5>
+</div>
+<div id="colinealidad" class="section level5">
+<h5>Colinealidad</h5>
+</div>
+</div>
+<div id="grafica" class="section level4">
+<h4>Grafica</h4>
 </div>
 </div>
 
