@@ -1,8 +1,348 @@
 ---
-title: 'Clase 4: Modelos Lineales'
+title: 'Clase 4: Pruebas no parametricas'
 output:
   html_document:
          css: custom.css
 ---
 
-Los modelos lineales son una clase de modelos estadísticos que se utilizan para describir la relación entre una variable dependiente y una o más variables independientes. Los modelos lineales asumen que la relación entre las variables es lineal, es decir, que la variación en la variable dependiente se puede explicar de manera lineal a través de la variación en las variables independientes.
+Las pruebas no paramétricas son un conjunto de técnicas de prueba estadística que se utilizan para evaluar hipótesis sobre una población cuando no se tienen suficientes datos para suponer una distribución particular de los datos. A diferencia de las pruebas paramétricas, que asumen una distribución particular de los datos (como la distribución normal), las pruebas no paramétricas no requieren ninguna suposición sobre la distribución de los datos.
+
+Algunas pruebas no paramétricas comunes incluyen:
+
+- Prueba de Wilcoxon: se utiliza para comparar dos grupos de datos ordenados y se utiliza a menudo cuando los datos no siguen una distribución normal.
+
+- Prueba de Kruskal-Wallis: se utiliza para comparar más de dos grupos de datos ordenados y se utiliza a menudo cuando los datos no siguen una distribución normal.
+
+- Prueba de Mann-Whitney: se utiliza para comparar dos grupos de datos no ordenados y se utiliza a menudo cuando los datos no siguen una distribución normal.
+
+- Prueba de chi-cuadrado: se utiliza para comparar una distribución observada de datos con una distribución esperada y se utiliza a menudo para comparar datos categóricos.
+
+Es importante tener en cuenta que las pruebas no paramétricas suelen ser menos robustas (es decir, tienen menor capacidad para detectar diferencias significativas) que las pruebas paramétricas, por lo que es importante elegir la prueba adecuada para su conjunto de datos y objetivo de investigación.
+
+### Pruebas no parametricas{.tabset .tabset-pills}
+
+#### Prueba de Wilcoxon
+
+La prueba de Wilcoxon es una prueba no paramétrica utilizada para comparar dos grupos de datos ordenados y se utiliza a menudo cuando los datos no siguen una distribución normal. Esta prueba es similar a la prueba t de Student, que es una prueba paramétrica utilizada para comparar dos grupos de datos, pero la prueba de Wilcoxon no requiere que los datos sigan una distribución normal.
+
+
+**Ejemplo de prueba Wilcoxon**
+
+:::{.notes}
+
+Primero necesitamos cargar la base de datos, en este caso utlizaremos `delomys.csv`
+
+```{r, echo=FALSE, include=FALSE}
+
+library(here)
+
+Delomys <- read.csv(here("data", "delomys.csv"))
+```
+
+
+```{r, eval=FALSE}
+
+Delomys <- read.csv("data/delomys.csv")
+```
+
+Ahora podemos realizar la prueba con el comando `wilcox.test()`
+
+```{r}
+wilcox.test(body_mass ~ sex, data= Delomys, alternative = "two.sided")
+```
+
+:::
+
+#### Prueba de Mann-Whitney
+
+La prueba de Mann-Whitney es una prueba no paramétrica utilizada para comparar dos grupos de datos no ordenados y se utiliza a menudo cuando los datos no siguen una distribución normal. Esta prueba es similar a la prueba t de Student, que es una prueba paramétrica utilizada para comparar dos grupos de datos, pero la prueba de Mann-Whitney no requiere que los datos sigan una distribución normal.
+
+Es importante tener en cuenta que la prueba de Mann-Whitney solo puede utilizarse para comparar dos grupos de datos y no es adecuada para comparar más de dos grupos. En su lugar, se puede utilizar la prueba de Kruskal-Wallis para comparar más de dos grupos de datos ordenados o la prueba de chi-cuadrado para comparar más de dos grupos de datos categóricos.
+
+
+**Ejemplo de la prueba Mann-Whitney**
+
+:::{.notes}
+
+Para realizar la prueba de Mann-Whitney en R, puedes utilizar la función wilcox.test() con el argumento alternative = "two.sided". La sintaxis para la función wilcox.test() es la siguiente:
+
+
+```{r}
+wilcox.test(body_mass ~ sex, data= Delomys, alternative = "two.sided")
+```
+
+:::
+
+La prueba de Wilcoxon y la prueba de Mann-Whitney son ambas pruebas no paramétricas utilizadas para comparar dos grupos de datos, pero hay algunas diferencias clave entre ellas. En la prueba de Wilcoxon se utiliza para comparar dos grupos de datos ordenados mientras que la prueba de Mann-Whitney se utiliza para comparar dos grupos de datos no ordenados.
+
+
+#### Prueba de Kruskal-Wallis
+
+
+La prueba de Kruskal-Wallis es una prueba no paramétrica utilizada para comparar más de dos grupos de datos ordenados y se utiliza a menudo cuando los datos no siguen una distribución normal. Esta prueba es similar a la prueba ANOVA, que es una prueba paramétrica utilizada para comparar más de dos grupos de datos, pero la prueba de Kruskal-Wallis no requiere que los datos sigan una distribución normal.
+
+**Ejemplo de prueba Kruskal-wallis**
+
+
+:::{.notes}
+
+Para este ejemplo utilizaremos la base de datos `penguins` del paquete `palmerpenguins`
+
+```{r}
+library(palmerpenguins)
+data(peguins)
+```
+
+Utilizares la prueba de Kruskal-wallis para comparar la masa del cuerpo de los pinguinos por especie.
+
+```{r}
+kruskal.test(body_mass_g ~ species, data= penguins)
+```
+
+Como se puedo observar el resultado indica que hay diferencias significativas de la masa del cuerpo por especie de pinguino, ahora necesitaremos realizar una prueba de contraste. En este caso utilizaremos la prueba Dunn.
+
+
+La prueba de Dunn es una prueba no paramétrica utilizada para comparar más de dos grupos de datos ordenados. Esta prueba se utiliza a menudo después de realizar una prueba de Kruskal-Wallis, que es otra prueba no paramétrica utilizada para comparar más de dos grupos de datos ordenados, cuando se ha encontrado una diferencia significativa entre al menos dos de los grupos.
+
+
+```{r}
+library(FSA)
+
+dunnTest(body_mass_g ~ species, data= penguins)
+
+
+```
+
+
+:::
+
+
+
+####  Prueba de chi-cuadrado
+
+La prueba de chi cuadrado es una prueba estadística utilizada para comparar dos o más grupos de datos categóricos. Esta prueba se basa en la hipótesis nula de que no hay diferencias significativas entre los grupos y se utiliza para determinar si hay una asociación entre las variables categóricas.
+
+Para realizar una prueba de chi cuadrado, se crea una tabla de contingencia que muestra la frecuencia de cada combinación de categorías entre las dos variables. 
+
+**Ejemplo Chi Cuadrado**
+
+:::{.notes}
+
+Para este ejemplo utilizares la base de datos `Delomys`, analisaremos si existe una asiciacion entre la variable `status` y `age`.
+
+- Primero creamos nuestra tabla de contingencia
+
+```{r}
+TablaCon <- table(Delomys$status, Delomys$age)
+TablaCon
+```
+
+- Ahora podemos realizar la prueba de Chi Cuadrado
+
+```{r}
+chisq.test(TablaCon)
+```
+- Visualizaremos nuestra relacion utilizando grafico de barra
+
+```{r, fig.align='center'}
+
+barplot(TablaCon,
+        main = "Gráfico de chi cuadrado", 
+        xlab = "Edad", 
+        ylab = "Estado")
+```
+
+
+:::
+
+####  Graficos{.tabset .tabset-pills}
+
+Hay varios tipos de gráficos que se pueden utilizar para mostrar diferencias significativas entre dos o más grupos de datos. Algunos de los gráficos más comunes que se utilizan para este propósito son:
+
+- Gráfico de barras: Este gráfico muestra la frecuencia o el promedio de cada grupo en forma de barras verticales o horizontal. Es adecuado para comparar dos o más grupos de datos numéricos o categóricos.
+
+- Gráfico de líneas: Este gráfico muestra el cambio en una variable a lo largo del tiempo o en función de otra variable. Es adecuado para comparar dos o más grupos de datos numéricos que tienen un orden natural.
+
+- Gráfico de puntos: Este gráfico muestra los valores individuales de cada grupo como puntos en un eje coordenado. Es adecuado para comparar dos o más grupos de datos numéricos.
+
+- Gráfico de cajas: Este gráfico muestra la distribución de los datos de cada grupo mediante el uso de una caja que representa el rango intercuartil y dos bigotes que representan el resto de los datos. Es adecuado para comparar dos o más grupos de datos numéricos.
+
+Es importante tener en cuenta que cada gráfico tiene sus propias ventajas y desventajas y que es importante elegir el gráfico adecuado en función de los datos y el mensaje que se desea transmitir.
+
+Para todos los ejemplo a continuacion utilizaremos el paquete `ggplot2` y la base de datos `penguins`
+
+##### Grafico de barra
+
+Para realizar nuetro grafico podemos usar la siguiente sintaxis
+
+**Primer ejemplo Sexo por Masa**
+
+:::{.notes}
+
+```{r, fig.align='center'}
+library(ggplot2)
+
+ggplot(data= penguins, aes(x= sex, y = body_mass_g)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Masa da cuerpo por sexo en pinguinos",
+       y= "Masa en gramos",
+       x= "Sexo")+
+  theme_classic()
+```
+
+Que se observa con este grafico? 
+
+Sera apropiado para visualizar una comparacion?
+
+:::
+
+**Segundo ejemplo Sexo por Masa**
+
+:::{.notes}
+
+Primero necesitaremos organizar nuestros datos para obtener la media y error estandard
+
+```{r}
+library(FSA)
+
+Sex_body <- Summarize(body_mass_g ~ sex, data= penguins)
+
+Sex_body$ES <- Sex_body$sd / sqrt(Sex_body$n)
+```
+
+Una vez que tenemos nuestra tabla podemos graficar
+
+```{r, fig.align='center'}
+
+ggplot(data= Sex_body, aes(x= sex, y = mean)) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(aes(ymin= mean - ES,
+                    ymax= mean + ES)) +
+  labs(title = "Masa da cuerpo por sexo en pinguinos",
+       y= "Masa en gramos",
+       x= "Sexo")+
+  theme_classic()
+```
+
+Que se observa con este grafico? 
+
+Sera apropiado para visualizar una comparacion?
+
+:::
+
+
+##### Grafico de caja modificado
+
+Para realizar un grafico de caja normal usamos la siguiente sintaxis
+
+**Primer ejemplo Sexo por Masa**
+
+:::{.notes}
+
+```{r, fig.align='center'}
+
+ggplot(data= penguins, aes(x= sex, y = body_mass_g)) +
+  geom_boxplot() +
+  labs(title = "Masa da cuerpo por sexo en pinguinos",
+       y= "Masa en gramos",
+       x= "Sexo")+
+  theme_classic()
+```
+
+Que se observa con este grafico? 
+
+Sera apropiado para visualizar una comparacion?
+
+
+:::
+
+
+
+**Segundo ejemplo Sexo por Masa**
+
+:::{.notes}
+
+Primero necesitaremos organizar nuestros datos para obtener la media y error estandard
+
+```{r}
+library(FSA)
+
+Sex_body <- Summarize(body_mass_g ~ sex, data= penguins)
+
+Sex_body$ES <- Sex_body$sd / sqrt(Sex_body$n)
+```
+
+Una vez que tenemos nuestra tabla podemos graficar
+
+```{r, fig.align='center'}
+
+ggplot(data= Sex_body, aes(x= sex, y = mean)) +
+  geom_point(size= 5, shape = 15) +
+  geom_errorbar(aes(ymin= mean - ES,
+                    ymax= mean + ES),
+                width = 0.5) +
+  labs(title = "Masa da cuerpo por sexo en pinguinos",
+       y= "Masa en gramos",
+       x= "Sexo")+
+  theme_classic()
+```
+
+Que se observa con este grafico? 
+
+Sera apropiado para visualizar una comparacion?
+
+:::
+
+**Tercer ejemplo Especie por Masa**
+
+:::{.notes}
+
+```{r, fig.align='center'}
+
+ggplot(data= penguins, aes(x= species, y = body_mass_g)) +
+  geom_boxplot() +
+  labs(title = "Masa da cuerpo por especie en pinguinos",
+       y= "Masa en gramos",
+       x= "Especie")+
+  annotate("text", x = "Adelie", y = 5000, label = "a")+
+  annotate("text", x = "Chinstrap", y = 5000, label = "a")+
+  annotate("text", x = "Gentoo", y = 6500, label = "a")+
+  theme_classic()
+```
+
+:::
+
+
+**Cuarto ejemplo Especie por Masa**
+
+:::{.notes}
+
+Primero necesitaremos organizar nuestros datos para obtener la media y error estandard
+
+```{r}
+Especie_body <- Summarize(body_mass_g ~ species, data= penguins)
+
+Especie_body$ES <- Sex_body$sd / sqrt(Especie_body$n)
+```
+
+Una vez que tenemos nuestra tabla podemos graficar
+
+```{r, fig.align='center'}
+
+ggplot(data= Especie_body, aes(x= species, y = mean)) +
+   geom_point(size= 5, shape = 15) +
+   geom_errorbar(aes(ymin= mean - ES,
+                    ymax= mean + ES),
+                width = 0.5) +
+  labs(title = "Masa da cuerpo por especie en pinguinos",
+       y= "Masa en gramos",
+       x= "Especie")+
+  annotate("text", x = "Adelie", y = 4000, label = "a")+
+  annotate("text", x = "Chinstrap", y = 4000, label = "a")+
+  annotate("text", x = "Gentoo", y = 5200, label = "b")+
+  theme_classic()
+```
+:::
+
+
+

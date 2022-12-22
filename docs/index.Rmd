@@ -23,19 +23,21 @@ knitr::opts_chunk$set(echo = TRUE)
 
 [Clase 2: Analisis de Diversidad](Clase2.html)
 
-[Clase 3: Correlacion y Analisi de Variaza](Clase3.html)
+[Clase 3: Analisis de Variaza y Prueba Correlacion](Clase3.html)
 
-[Clase 4: Modelos Lineales](Clase4.html)
+[Clase 4: Pruebas no parametricas](Clase4.html)
 
 [Clase 5: Modelos lineales Generalizados: Poisson](Clase5.html)
 
-[Clase 6: Modelos lineales Generalizados: Binomial](Clase6.html)
+[Clase 6: Modelos lineales Generalizados: Poisson](Clase6.html)
 
-[Clase 7: Anaisis de escalado multidemencional y PCA](Clase7.html)
+[Clase 7: Modelos lineales Generalizados: Binomial](Clase7.html)
 
-[Clase 8: Analisis de similitud, Permanova, MRPP e Indicador de especies](Clase8.html)
+[Clase 8: Anaisis de escalado multidemencional y PCA](Clase8.html)
 
-[Clase 9: Repaso, Preguntas y respuestas](Clase9.html)
+[Clase 9: Analisis de similitud, Permanova, MRPP e Indicador de especies](Clase9.html)
+
+[Clase 10: Repaso, Preguntas y respuestas](Clase10.html)
 
 
 

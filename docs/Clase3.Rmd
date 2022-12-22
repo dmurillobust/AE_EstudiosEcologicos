@@ -1,5 +1,5 @@
 ---
-title: 'Clase 3: Correlacion y Analisi de Variaza'
+title: 'Clase 3: Analisis de Variaza y Prueba Correlacion'
 output:
    html_document:
          css: custom.css
@@ -52,32 +52,7 @@ qqPlot(delomys$body_mass)
 
 Es importante tener en cuenta que el gráfico de cuartil-cuartil es solo una herramienta visual y no proporciona una medida cuantitativa de la normalidad de los datos. Para obtener una medida cuantitativa, se puede utilizar una prueba estadística como la prueba de normalidad de Shapiro.
 
-#### Análisis de correlación
 
-El análisis de correlación es una técnica estadística que se utiliza para determinar si hay una relación entre dos variables. Esta relación se puede medir utilizando el coeficiente de correlación, que puede variar entre -1 y 1. Un coeficiente de correlación cercano a 1 indica una correlación positiva fuerte, lo que significa que a medida que una de las variables aumenta, la otra también aumenta de manera predecible. Un coeficiente de correlación cercano a -1 indica una correlación negativa fuerte, lo que significa que a medida que una de las variables aumenta, la otra disminuye de manera predecible. Un coeficiente de correlación cercano a 0 indica una correlación débil o nula entre las variables.
-
-**Prueba de correlación de pearson**
-
-```{r}
-cor.test(delomys$body_mass, delomys$body_length)
-```
-
-**Prueba de correlación de spearman**
-
-```{r}
-cor.test(delomys$body_mass, delomys$body_length, method = "spearman")
-```
-
-**Grafico de correlacion**
-
-
-```{r}
-library(ggplot2)
-
-ggplot(data= delomys, aes(x =body_length, y= body_mass))+
-  geom_point()+
-  theme_classic()
-```
 
 
 #### Análisis de varianza{.tabset .tabset-pilss}
@@ -132,3 +107,29 @@ delomys_ancova <- Anova(lm(body_mass ~ sex + status + body_length, data = delomy
 delomys_ancova
 ```
 
+#### Análisis de correlación
+
+El análisis de correlación es una técnica estadística que se utiliza para determinar si hay una relación entre dos variables. Esta relación se puede medir utilizando el coeficiente de correlación, que puede variar entre -1 y 1. Un coeficiente de correlación cercano a 1 indica una correlación positiva fuerte, lo que significa que a medida que una de las variables aumenta, la otra también aumenta de manera predecible. Un coeficiente de correlación cercano a -1 indica una correlación negativa fuerte, lo que significa que a medida que una de las variables aumenta, la otra disminuye de manera predecible. Un coeficiente de correlación cercano a 0 indica una correlación débil o nula entre las variables.
+
+**Prueba de correlación de pearson**
+
+```{r}
+cor.test(delomys$body_mass, delomys$body_length)
+```
+
+**Prueba de correlación de spearman**
+
+```{r}
+cor.test(delomys$body_mass, delomys$body_length, method = "spearman")
+```
+
+**Grafico de correlacion**
+
+
+```{r}
+library(ggplot2)
+
+ggplot(data= delomys, aes(x =body_length, y= body_mass))+
+  geom_point()+
+  theme_classic()
+```
