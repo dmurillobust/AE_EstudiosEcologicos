@@ -44,6 +44,38 @@ head(creeps)
 - pole: porcentaje de paisage compuesto de pole timber (mid-seral)
 - sapling: porcentaje de paisage compuesto de saplings (early-seral)
 
+#### Correlacion simple y multiple
+
+La correlación es una medida que describe la relación entre dos variables. Existen diferentes tipos de correlación, dependiendo del tipo de variables que se están analizando. Algunos de los tipos más comunes son:
+
+- Correlación lineal: La correlación lineal mide la relación entre dos variables cuantitativas y se puede medir utilizando el coeficiente de correlación lineal (también conocido como el coeficiente de Pearson). Este coeficiente varía entre -1 y 1 y mide la intensidad y la dirección de la relación lineal entre las dos variables. Un valor de 1 indica una correlación perfectamente positiva, un valor de -1 indica una correlación perfectamente negativa y un valor de 0 indica ausencia de correlación.
+
+- Correlación no lineal: La correlación no lineal mide la relación entre dos variables cuantitativas o cualitativas y no sigue una relación lineal. Algunas de las métricas que se pueden utilizar para medir la correlación no lineal son el coeficiente de correlación de Spearman y el coeficiente de correlación de Kendall.
+
+**Correlacion de Pearson**
+
+```{r}
+cor.test(creeps$abund, creeps$saw)
+```
+
+**Correlacion de Spearman**
+
+```{r}
+cor.test(creeps$abund, creeps$saw, method = "spearman")
+```
+
+**Correlacion multile**
+
+
+```{r, fig.align='center',message=FALSE, fig.width=9, fig.height=9}
+library(ggplot2)
+library(GGally)
+
+MulplePlot <- ggpairs(creeps)
+MulplePlot
+```
+
+
 #### Modelo lineal simple
 
 Un modelo lineal simple es un modelo matemático que se utiliza para predecir una variable dependiente (también conocida como la variable objetivo o la variable respuesta) a partir de una única variable independiente (también conocida como la variable predictor o la variable explicativa). Este tipo de modelo se basa en la hipótesis de que la relación entre la variable dependiente y la variable independiente es lineal, es decir, que puede ser representada por una línea recta en un gráfico.
