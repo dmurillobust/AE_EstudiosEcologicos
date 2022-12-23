@@ -14,3 +14,5 @@ Base de datos y presentaciones: [Materiales](https://drive.google.com/drive/fold
 Descargar R base: [R base](https://cran.r-project.org/bin/windows/base/)
 
 Descargar R studio: [R Studio](https://posit.co/download/rstudio-desktop/)
+
+![](imagenes/HNBI2_LOGO.jpg)

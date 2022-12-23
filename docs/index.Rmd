@@ -41,7 +41,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-![Haciendo ciencia a base de conciencia](imagenes/HNBI2_LOGO.jpg)
+![](imagenes/HNBI2_LOGO.jpg)
 
 
 
