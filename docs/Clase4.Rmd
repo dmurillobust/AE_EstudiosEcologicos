@@ -152,6 +152,12 @@ barplot(TablaCon,
         ylab = "Estado")
 ```
 
+- Una visualizacion mas adecuada
+
+```{r}
+library(vcd)
+mosaic(~ status + age, data = Delomys, shade = T)
+```
 
 :::
 

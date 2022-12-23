@@ -1,8 +1,8 @@
 ---
 title: 'Clase 5: Modelos lineales'
 output:
-  html_document:
-    df_print: paged
+   html_document:
+         css: custom.css
 ---
 
 Los modelos lineales son un tipo de modelo estadístico utilizado para predecir el valor de una variable de interés (la variable dependiente) a partir de uno o más variables predictivas (las variables independientes). Los modelos lineales se basan en la suposición de que la relación entre la variable dependiente y las variables independientes es lineal.
@@ -46,15 +46,243 @@ head(creeps)
 
 #### Modelo lineal simple
 
+Un modelo lineal simple es un modelo matemático que se utiliza para predecir una variable dependiente (también conocida como la variable objetivo o la variable respuesta) a partir de una única variable independiente (también conocida como la variable predictor o la variable explicativa). Este tipo de modelo se basa en la hipótesis de que la relación entre la variable dependiente y la variable independiente es lineal, es decir, que puede ser representada por una línea recta en un gráfico.
+
+La forma general de un modelo lineal simple es:
+
+$$y = β0 + β1 * x$$
+
+donde:
+
+- y es la variable dependiente
+- x es la variable independiente
+- β0 es el intercepto (el valor de y cuando x es igual a cero)
+- β1 es el coeficiente de la variable independiente (la pendiente de la línea)
+
+**Ejemplo modelo lineal simple**
+
+:::{.notes}
+
+Para realizar nuetro ejemplo utilizaremos la variable `conifer` para predecir nuestra variable respuesta `abund`
+
+```{r}
+fit1 <- lm(abund ~ conifer, data= creeps)
+```
+
+Para visualizar nuestro resultado podemos utilizar el comando `summary()`
+
+```{r}
+summary(fit1)
+```
+Podemos observar que el intercepto (β0) es `0.4097`, el coeficiente (β1) es `-0.0003403`. Se puede apreciar que el valor p es mayor de 0.05 (alpha), por lo que no hay una relacion significativa entre `conifer` y `abund`. Asi mismo el R cuadrado es `-0.03` un valor muy bajo por lo que este modelo simple solo explica un 3% de la varianza de `abund`
+
+`NOTA`: Un modelo lineal puede dar un valor de R cuadrado negativo cuando el modelo es peor que una línea horizontal en la predicción de la variable dependiente (también conocida como la variable objetivo o la variable respuesta). Esto significa que el modelo no es capaz de explicar ninguna de la variabilidad de la variable dependiente.
+
+:::
+
+**Segundo ejemplo modelo lineal simple**
+
+:::{.notes}
+
+Para este ejemplo utilizares la variable `saw` para predecir `abund`
+
+```{r}
+fit2 <- lm(abund ~ saw, data= creeps)
+```
+
+Observermos nuestros resultados
+
+```{r}
+summary(fit2)
+```
+En este caso hay una relacion significativa de nuestras variables (p valor < 0.05), la relacion es positiva porque el `coeficiente (β1)` es `0.0058`. El intercepto nos indica que cuando `saw` tiene el valor de `0`, `abund` tendra el valor de `0.099`. En este caso el R cuadrado es `0.06025` por lo que nuestro modelo explica un 60% de la varianza de `abund`.
+
+:::
+
+**Regression lineal**
+
+Ahora que hemos encontrado un "buen" modelo, podemos predicir el valor de `abund` utilizando la variable `saw`, para estos es necesario aplicar la regression lineal que se basa en la ecuacion.
+
+$$y = β0 + β1 * x$$
+
+:::{.notes}
+
+Para aplicar la regresion lineal tenemos que conocer los valores de nuestros elementos, y = es el valor de `abund` a predecir
+β0 = 0.099
+β1 = 0.0058
+x  = es el valor de `saw` que utilizaremos para predecir
+
+Si queremos `abund` cuando tenemos un valor de `75` para `saw`, seria:
+
+```{r}
+
+0.099 + 0.0058 * 75
+```
+Cuando `saw` vale 75, `abund` sera 0.534, estos de acuerdo a nuestro modelo `fit2`.
+
+Si queremos predecir varios valores a la vez podemos crear una funcion para facilitarnos el trabajo
+
+```{r}
+pre_saw <- function(saw){
+  0.099 + 0.0058 * saw
+}
+```
+
+probemos nuestra funcion
+
+```{r}
+pre_saw(75)
+```
+Ahora con varios valores
+
+```{r}
+pre_saw(1:10)
+```
+:::
+
 #### Modelo lineal multiple
+
+Un modelo lineal múltiple es un modelo matemático que se utiliza para predecir una variable dependiente (también conocida como la variable objetivo o la variable respuesta) a partir de varias variables independientes (también conocidas como las variables predictoras o las variables explicativas). Este tipo de modelo se basa en la hipótesis de que la relación entre la variable dependiente y las variables independientes es lineal y que no hay interacciones significativas entre las variables.
+
+La forma general de un modelo lineal múltiple es:
+
+y = β0 + β1 * x1 + β2 * x2 + ... + βn * xn
+
+donde:
+
+- y es la variable dependiente
+- x1, x2, ..., xn son las variables independientes
+- β0 es el intercepto (el valor de y cuando todas las variables independientes son iguales a cero)
+- β1, β2, ..., βn son los coeficientes de las variables independientes (la pendiente de la línea para cada variable independiente)
+
+**Ejemplo modelo lineal multiple**
+
+:::{.notes}
+
+```{r}
+fit3 <- lm(abund ~ elevation + road.dens + saw, data= creeps)
+```
+
+Revismeos nuestro resultado
+
+```{r}
+summary(fit3)
+```
+:::
+
+**Segundo ejemplo modelo lineal multiple**
+
+:::{.notes}
+
+```{r}
+fit4 <- lm(abund ~ elevation + road.dens + saw + stream.den + sapling, data= creeps)
+```
+
+Revismeos nuestro resultado
+
+```{r}
+summary(fit4)
+```
+
+:::
+
+En estos modelo el `fit3` explica un `0.6263`, mientras el modelo `fit4` explica un `0.7065`.
+
 
 #### Modelo lineal con interaccion
 
+Un modelo de regresión lineal con interacciones es un modelo matemático que se utiliza para predecir una variable dependiente (también conocida como la variable objetivo o la variable respuesta) a partir de varias variables independientes (también conocidas como las variables predictoras o las variables explicativas), considerando interacciones entre ellas. Una interacción entre dos variables se refiere a un efecto de una variable sobre la otra que depende del nivel de la otra variable.
+
+La forma general de un modelo de regresión lineal con interacciones es:
+
+y = β0 + β1 * x1 + β2 * x2 + β3 * x1 * x2 + β4 * x3 + ... + βn * xn
+
+donde:
+
+- y es la variable dependiente
+- x1, x2, x3, ..., xn son las variables independientes
+- β0 es el intercepto (el valor de y cuando todas las variables independ
+
+**Ejemplo modelo lineal con interaccion**
+
+:::{.notes}
+
+```{r}
+fit5 <- lm(abund ~ saw * mps.S, data= creeps)
+```
+
+Revismeos nuestro resultado
+
+```{r}
+summary(fit5)
+```
+
+Ya que el modelo con interaccion es un poco complicado de explicar, realizaremos un grfaico
+
+```{r}
+library(sjPlot)
+
+plot_model(fit5, "int")
+```
+
+:::
+
 #### Seleccion de modelo usando AIC
 
-#### Interpretacion del modelo mas adecuado
+La selección del modelo más adecuado para un conjunto de datos es un proceso importante en el análisis de datos. Existen diferentes criterios que se pueden utilizar para seleccionar el modelo más adecuado, dependiendo del objetivo del análisis y del tipo de datos que se tienen. Algunos de los criterios más comunes son:
 
-#### Validacion de modelo{.tabset .tabset}
+- Simplicidad: Un modelo más simple es más fácil de interpretar y generalizar, pero puede no ser tan preciso como un modelo más complejo.
+
+- Precisión: Un modelo más preciso es capaz de explicar mejor la variabilidad de la variable dependiente. Se pueden utilizar métricas como el coeficiente de determinación (R cuadrado) o el error cuadrático medio (MSE) para evaluar la precisión de un modelo.
+
+- Bondad de ajuste: Un modelo con una bondad de ajuste adecuada se ajusta bien a los datos, pero también tiene capacidad de generalización a datos futuros. Se pueden utilizar métricas como el AIC o el BIC para evaluar la bondad de ajuste de un modelo.
+
+- Interpretabilidad: Un modelo más fácil de interpretar es más útil para comprender las relaciones entre las variables y para hacer predicciones basadas en ellas.
+
+:::{.notes}
+
+El AIC (Information Criterion) es una métrica que se utiliza para evaluar la bondad de ajuste de diferentes modelos de regresión y seleccionar el modelo más adecuado. El AIC se basa en la idea de que un modelo más preciso debe tener un menor AIC, pero también debe tener una suficiente capacidad de generalización a datos futuros.
+
+La fórmula del AIC es:
+
+$$AIC = 2 * k - 2 * ln(L)$$
+
+donde:
+
+- k es el número de parámetros del modelo
+- ln(L) es el logaritmo natural del valor de verosimilitud del modelo
+
+:::
+
+A continuacion utilizares el Criterio de Informacion de Akaike (AIC) para identificar el modelo mas adeacuado
+
+:::{.notes}
+
+Primero debemos de proponer los modelos candidatos
+
+```{r}
+fit1 <- lm(abund ~ elevation, data= creeps)
+fit2 <- lm(abund ~ elevation + road.dens, data= creeps)
+fit3 <- lm(abund ~ road.dens + saw + stream.den, data= creeps)
+fit4 <- lm(abund ~ saw + sapling, data= creeps)
+fit5 <- lm(abund ~ saw + mps.S, data= creeps)
+fit6 <- lm(abund ~ saw * mps.S, data= creeps)
+```
+
+Ahora utilizaremos el comando `aictab()` del paquete `AICcmodavg` para identificar nuestro modelo mas adecuado.
+
+```{r}
+library(AICcmodavg)
+
+Modelos_Candidatos <- list(fit1, fit2, fit3, fit4, fit5, fit6)
+Nombres <- c("fit1", "fit2", "fit3", "fit4", "fit5", "fit6")
+
+aictab(Modelos_Candidatos, Nombres, sort = TRUE)
+```
+
+:::
+
+#### Validacion de modelo
 
 Los modelos lineales se basan en ciertos supuestos acerca de los datos y la relación entre la variable dependiente y las variables independientes. Estos supuestos son:
 
@@ -68,12 +296,75 @@ Normalidad de errores: Los errores siguen una distribución normal.
 
 Es importante tener en cuenta que si estos supuestos no se cumplen, los resultados del modelo lineal pueden ser inexactos o poco fiables. Por lo tanto, es importante verificar que estos supuestos se cumplen antes de utilizar un modelo lineal.
 
-##### Distribucion de residuales
 
-##### Homogeneidad de residuales
 
-##### Colinealidad
+En R existen diferentes formas de evaluar los supuestos del modelo lineal, por ejemplo podemos utilizar el comando `plot()`.
 
-#### Grafica
+```{r, fig.align='center'}
+
+par(mfrow = c(2,2))
+
+plot(fit3)
+```
+
+Pero los graficos resultantes del comando `plot()` pueden ser muy subjetivos, por eso utilizaremos el paquete `DHARMa` el cual contiene comando utiles para validar nuestro modelo.
+
+```{r}
+library(DHARMa)
+```
+
+**Normalidad y homogeneidad de residuales**
+
+:::{.notes}
+
+```{r}
+testResiduals(fit3)
+```
+
+
+:::
+
+**colinealidad**
+
+La colinealidad es un problema que puede surgir en el análisis de regresión cuando dos o más variables independientes están altamente correlacionadas entre sí. Esto puede ocurrir cuando las variables son muy similares o cuando son medidas de manera diferente pero representan el mismo concepto. La colinealidad puede dificultar la interpretación del modelo y afectar la precisión de las predicciones.
+
+Para detectar la colinealidad en R, puede utilizar la función vif() del paquete car. Esta función calcula el factor de inflación de la varianza (VIF) para cada variable del modelo de regresión y permite evaluar la colinealidad entre ellas. El VIF de una variable mide cuánto aumenta la varianza de las estimaciones de los coeficientes debido a la colinealidad con otras variables. Valores altos de VIF indican colinealidad y valores bajos indican independencia.
+
+:::{.notes}
+
+```{r}
+library(car)
+vif(fit3)
+```
+
+:::
+
+#### Grafico del modelo
+
+**con SjPlot**
+
+:::{.notes}
+
+```{r}
+library(sjPlot)
+
+plot_model(fit3, "pre", 
+           show.data = TRUE,
+           grid = TRUE)
+```
+
+
+:::
+
+**Con ggplot2**
+
+```{r}
+library(ggplot2)
+
+ggplot(data= creeps, aes(x = saw, y= abund)) +
+  geom_point()+
+  geom_smooth(method = lm)
+```
+
 
 
