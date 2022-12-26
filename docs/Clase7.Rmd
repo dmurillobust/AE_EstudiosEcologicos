@@ -5,3 +5,163 @@ output:
          css: custom.css
 ---
 
+
+Un modelo lineal general (GLM) con una distribución binomial se utiliza para modelar datos de respuesta binaria, es decir, datos que tienen solo dos posibles resultados, como sí/no, verdadero/falso o exitoso/fracasado. La distribución binomial se basa en la ley de Bernoulli, que describe el comportamiento de una secuencia de eventos independientes y binarios.
+
+
+### Contenido{.tabset .tabset-pills}
+
+#### Base de datos
+
+Para esta clase utilizaremos una base de datos de pumpkinsedd fish (*Lepornis gibbosus*), algunos individuos tienen un conspicuo punto rojo sobre su operculum que ha sido asociado con el comportamiento de dominancia. Zieba *et al*. (2018) investigo la funcion de este punto rojo en poblaciones de pumpkinseed colectados a lo largo de Europa donde la especie es invasiva.
+
+La base de datos colectada por Zieba *et al*. (2018) incluye individuos con estrategias de aparamiento (female, male territoeial, male sneaker), longitud en mm, peso en gramos, y presencia del punto rojo. Sexo y estrategia de apareamiento fueron asignadas por disseccion de las gonodas. Presencia del punto rojo es la variable respuesta, y las demas variables son covariables. 
+
+Para cargar la base de datos utilizaremos el siguiente comando
+
+```{r}
+pkin <- read.table(file = "https://www.dropbox.com/s/xq2dojah9k0kftu/pumpkinseed.txt?dl=1",
+                   header= TRUE, dec = ".", stringsAsFactors = TRUE)
+```
+
+Empezaremos con una ligera ispeccion de los datos
+
+```{r}
+str(pkin)
+```
+
+La base de datos comprende 900 observaciones con 6 variables. Cada filarepresenta un individuo de pumpkinseed collectado de diferente poblaciones. 
+
+- pop: Poblacion
+- sex: sex
+- tactic: sistema de apareamiento
+- wt: peso del pez
+- sl: longitud
+- spot: presencia del punto rojo
+
+#### Modelos candidatos
+
+
+Para construir un GLM con una distribución binomial en R, puede utilizar la función "glm()" y especificar la familia "binomial" en el argumento "family".
+
+```{r}
+ModelosCan <- list("fit1_pkin" = glm(spot ~ pop, family = binomial(link = "logit"), data = pkin),
+"fit2_pkin" = glm(spot ~ sex, family = binomial(link = "logit"), data = pkin),
+"fit3_pkin" = glm(spot ~ tactic, family = binomial(link = "logit"), data = pkin),
+"fit4_pkin" = glm(spot ~ wt, family = binomial(link = "logit"), data = pkin),
+"fit5_pkin" = glm(spot ~ sl, family = binomial(link = "logit"), data = pkin),
+"fit6_pkin" = glm(spot ~ pop + sex + tactic, family = binomial(link = "logit"), data = pkin),
+"fit7_pkin" = glm(spot ~ sex + wt + sl, family = binomial(link = "logit"), data = pkin),
+"fit8_pkin" = glm(spot ~ tactic + wt + sl, family = binomial(link = "logit"), data = pkin),
+"fit9_pkin" = glm(spot ~ pop:sex, family = binomial(link = "logit"), data = pkin),
+"fit10_pkin" = glm(spot ~ pop:tactic, family = binomial(link = "logit"), data = pkin),
+"fit10_pkin" = glm(spot ~ wt*sl, family = binomial(link = "logit"), data = pkin))
+```
+
+#### Sellecion del modelo
+
+```{r}
+library(AICcmodavg)
+
+aictab(ModelosCan)
+
+
+```
+
+#### Validacion del modelo
+
+Usaremos el paquete `DHARma`
+
+```{r}
+library(DHARMa)
+
+testResiduals(ModelosCan$fit6_pkin)
+```
+
+La distancia de Cook es una medida de la influencia de un punto de datos en un modelo de regresión. Un punto de datos con una distancia de Cook alta puede tener un gran impacto en el modelo y puede ser un indicador de que el modelo no se ajusta adecuadamente a los datos.
+
+```{r}
+plot(cooks.distance(ModelosCan$fit6_pkin),
+     main="Distancia de Cook", 
+     xlab="Indice del punto de datos", 
+     ylab="Distancia de Cook")
+
+```
+
+
+#### Interpretacion del Modelo
+
+```{r}
+summary(ModelosCan$fit6_pkin)
+```
+
+#### Grafico Sex y Tactic
+
+- **Sex**
+
+:::{.notes}
+
+```{r, fig.align='center'}
+library(ggplot2)
+library(broom)
+
+resumenSex <- broom::tidy(ModelosCan$fit2_pkin)
+
+resumenSex$ci.lower <- resumenSex$estimate - 1.96 * resumenSex$std.error
+resumenSex$ci.upper <- resumenSex$estimate + 1.96 * resumenSex$std.error
+
+ggplot(resumenSex, aes(x=term, y=estimate)) +
+  geom_point() +
+  geom_errorbar(aes(ymin=ci.lower, 
+                     ymax=ci.upper))+
+  theme_bw()
+
+```
+
+:::
+
+- **Tactic**
+
+:::{.notes}
+
+```{r, fig.align='center'}
+resumenTactic <- broom::tidy(ModelosCan$fit3_pkin)
+
+resumenTactic$ci.lower <- resumenTactic$estimate - 1.96 * resumenTactic$std.error
+resumenTactic$ci.upper <- resumenTactic$estimate + 1.96 * resumenTactic$std.error
+
+ggplot(resumenTactic, aes(x=term, y=estimate)) +
+  geom_point() +
+  geom_errorbar(aes(ymin=ci.lower, 
+                     ymax=ci.upper))+
+  theme_bw()
+```
+
+:::
+
+- **Poblacion**
+
+:::{.notes}
+
+```{r}
+resumenPoblacion <- broom::tidy(ModelosCan$fit1_pkin)
+
+resumenPoblacion$ci.lower <- resumenPoblacion$estimate - 1.96 * resumenPoblacion$std.error
+resumenPoblacion$ci.upper <- resumenPoblacion$estimate + 1.96 * resumenPoblacion$std.error
+
+ggplot(resumenPoblacion, aes(x=term, y=estimate)) +
+  geom_point() +
+  geom_errorbar(aes(ymin=ci.lower, 
+                     ymax=ci.upper))
+
+ggplot(resumenPoblacion[-6,], aes(x=term, y=estimate)) +
+  geom_point() +
+  geom_errorbar(aes(ymin=ci.lower, 
+                     ymax=ci.upper))+
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90))
+
+```
+:::
+
+
