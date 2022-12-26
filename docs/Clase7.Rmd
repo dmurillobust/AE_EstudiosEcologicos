@@ -1,8 +1,7 @@
 ---
-title: 'Clase 7: Anaisis de escalado multidemencional y PCA'
+title: 'Clase 7: Modelos lineales Generalizados: Binomial'
 output:
   html_document:
-    df_print: paged
+         css: custom.css
 ---
 
-Proximamente...
