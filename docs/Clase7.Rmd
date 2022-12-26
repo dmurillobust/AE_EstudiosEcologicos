@@ -95,7 +95,9 @@ plot(cooks.distance(ModelosCan$fit6_pkin),
 summary(ModelosCan$fit6_pkin)
 ```
 
-#### Grafico Sex y Tactic
+#### Graficos{.tabset .tabset-pills}
+
+##### Categoricos
 
 - **Sex**
 
@@ -106,6 +108,8 @@ library(ggplot2)
 library(broom)
 
 resumenSex <- broom::tidy(ModelosCan$fit2_pkin)
+resumenSex$term[1] <- "Hembra"
+resumenSex$term[2] <- "Macho"
 
 resumenSex$ci.lower <- resumenSex$estimate - 1.96 * resumenSex$std.error
 resumenSex$ci.upper <- resumenSex$estimate + 1.96 * resumenSex$std.error
@@ -127,6 +131,10 @@ ggplot(resumenSex, aes(x=term, y=estimate)) +
 ```{r, fig.align='center'}
 resumenTactic <- broom::tidy(ModelosCan$fit3_pkin)
 
+resumenTactic$term[1] <- "fem"
+resumenTactic$term[2] <- "sneak"
+resumenTactic$term[3] <- "terr"
+
 resumenTactic$ci.lower <- resumenTactic$estimate - 1.96 * resumenTactic$std.error
 resumenTactic$ci.upper <- resumenTactic$estimate + 1.96 * resumenTactic$std.error
 
@@ -146,6 +154,8 @@ ggplot(resumenTactic, aes(x=term, y=estimate)) +
 ```{r}
 resumenPoblacion <- broom::tidy(ModelosCan$fit1_pkin)
 
+resumenPoblacion$term[1] <- "pop6T"
+
 resumenPoblacion$ci.lower <- resumenPoblacion$estimate - 1.96 * resumenPoblacion$std.error
 resumenPoblacion$ci.upper <- resumenPoblacion$estimate + 1.96 * resumenPoblacion$std.error
 
@@ -164,4 +174,38 @@ ggplot(resumenPoblacion[-6,], aes(x=term, y=estimate)) +
 ```
 :::
 
+##### Continuos
+
+
+```{r, fig.align='center'}
+
+wt <- ggplot(data= pkin, aes(x= wt , y= spot)) +
+  stat_smooth(method = "glm", method.args = list(family = "binomial"))+
+  geom_point()+
+  theme_bw()
+
+sl <- ggplot(data= pkin, aes(x= sl , y= spot)) +
+  stat_smooth(method = "glm", method.args = list(family = "binomial"))+
+  geom_point()+
+  theme_bw()
+
+cowplot::plot_grid(wt, sl, nrow = 1, ncol = 2)
+```
+
+##### Interaccion
+
+```{r, fig.align='center'}
+
+wt_sex <- ggplot(data= pkin, aes(x= wt , y= spot, color = sex)) +
+  stat_smooth(method = "glm", method.args = list(family = "binomial"))+
+  geom_point()+
+  theme_bw()
+
+sl_sex <- ggplot(data= pkin, aes(x= sl , y= spot, color = sex)) +
+  stat_smooth(method = "glm", method.args = list(family = "binomial"))+
+  geom_point()+
+  theme_bw()
+
+cowplot::plot_grid(wt_sex, sl_sex, nrow = 1, ncol = 2)
+```
 
