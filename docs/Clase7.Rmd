@@ -105,20 +105,9 @@ summary(ModelosCan$fit6_pkin)
 
 ```{r, fig.align='center'}
 library(ggplot2)
-library(broom)
+library(sjPlot)
 
-resumenSex <- broom::tidy(ModelosCan$fit2_pkin)
-resumenSex$term[1] <- "Hembra"
-resumenSex$term[2] <- "Macho"
-
-resumenSex$ci.lower <- resumenSex$estimate - 1.96 * resumenSex$std.error
-resumenSex$ci.upper <- resumenSex$estimate + 1.96 * resumenSex$std.error
-
-ggplot(resumenSex, aes(x=term, y=estimate)) +
-  geom_point() +
-  geom_errorbar(aes(ymin=ci.lower, 
-                     ymax=ci.upper))+
-  theme_bw()
+plot_model(ModelosCan$fit2_pkin, "pre")
 
 ```
 
@@ -129,20 +118,8 @@ ggplot(resumenSex, aes(x=term, y=estimate)) +
 :::{.notes}
 
 ```{r, fig.align='center'}
-resumenTactic <- broom::tidy(ModelosCan$fit3_pkin)
 
-resumenTactic$term[1] <- "fem"
-resumenTactic$term[2] <- "sneak"
-resumenTactic$term[3] <- "terr"
-
-resumenTactic$ci.lower <- resumenTactic$estimate - 1.96 * resumenTactic$std.error
-resumenTactic$ci.upper <- resumenTactic$estimate + 1.96 * resumenTactic$std.error
-
-ggplot(resumenTactic, aes(x=term, y=estimate)) +
-  geom_point() +
-  geom_errorbar(aes(ymin=ci.lower, 
-                     ymax=ci.upper))+
-  theme_bw()
+plot_model(ModelosCan$fit3_pkin, "pre")
 ```
 
 :::
@@ -152,25 +129,7 @@ ggplot(resumenTactic, aes(x=term, y=estimate)) +
 :::{.notes}
 
 ```{r}
-resumenPoblacion <- broom::tidy(ModelosCan$fit1_pkin)
-
-resumenPoblacion$term[1] <- "pop6T"
-
-resumenPoblacion$ci.lower <- resumenPoblacion$estimate - 1.96 * resumenPoblacion$std.error
-resumenPoblacion$ci.upper <- resumenPoblacion$estimate + 1.96 * resumenPoblacion$std.error
-
-ggplot(resumenPoblacion, aes(x=term, y=estimate)) +
-  geom_point() +
-  geom_errorbar(aes(ymin=ci.lower, 
-                     ymax=ci.upper))
-
-ggplot(resumenPoblacion[-6,], aes(x=term, y=estimate)) +
-  geom_point() +
-  geom_errorbar(aes(ymin=ci.lower, 
-                     ymax=ci.upper))+
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 90))
-
+plot_model(ModelosCan$fit1_pkin, "pre")
 ```
 :::
 
