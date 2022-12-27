@@ -109,6 +109,10 @@ library(sjPlot)
 
 plot_model(ModelosCan$fit2_pkin, "pre")
 
+library(effects)
+eff <- effect("sex", ModelosCan$fit2_pkin)
+plot(eff)
+
 ```
 
 :::
