@@ -1,8 +1,177 @@
 ---
-title: 'Clase 8: Analisis de similitud, Permanova, MRPP e Indicador de especies'
+title: 'Clase 8: Analisis Multivariado Parte 1'
+subtitle: 'Analisis de Componentes Principales (PCA), Escalado no métrico multidimensional (NMDS) y PERMANOVA'
 output:
   html_document:
-    df_print: paged
+         css: custom.css
 ---
 
-Proximamente...
+### Introduccion{.tabset .tabset-pills}
+
+El análisis multivariado de similitud es una técnica de análisis multivariado que se utiliza en ecología y otras disciplinas para evaluar la similitud o diferencia entre grupos de muestras o observaciones. Esta técnica se basa en el uso de medidas de similitud o dissimilaridad, como la distancia euclidiana o la distancia de Bray-Curtis, para calcular la similitud o diferencia entre las muestras o observaciones. Dentro de los métodos de análisis multivariado encontramos el análisis de componentes principales (PCA) o el escalado no métrico multidimensional (NMDS).
+
+#### Base de datos
+
+Para esta clase utilizaremos la base de datos `bettles.txt`. Estos datos muestran las abundancias de escarabajos en tres tipos de hábitat en el Reino Unido. Hay 6 réplicas para cada hábitat (Wood, Grass, Edge). El conjunto de datos asociado muestra la altura de la vegetación y el tipo de hábitat de cada muestra
+
+
+```{r, echo=FALSE}
+library(here)
+bettles <- read.table(here("data", "bettles.txt"))
+
+```
+
+```{r, eval=FALSE}
+
+bettles <- read.table( "data/bettles.txt")
+
+```
+
+En nuestra base de datos `bettles` podemos observar que la variable `Habitat` es un factor con tres categorias: E: Borde, G: Grama, W: Bosque.
+
+```{r}
+table(bettles$Habitat)
+```
+
+Nuestro objetivo sera determinar si los tipos de habitat presentan disimilitud en base a la comunidad de escarabajos. Para estos realizaremos primero un PCA, y luego un NMDS.
+
+
+#### PCA{.tabset .tabset-pills}
+
+El análisis de componentes principales (PCA, por sus siglas en inglés) es una técnica de análisis multivariado que se utiliza para reducir la dimensión de un conjunto de datos y simplificar la interpretación de los mismos. Esta técnica se basa en la idea de que las variables originales pueden ser representadas por un conjunto más reducido de variables denominadas "componentes principales", que son combinaciones lineales de las variables originales. Cada componente principal es una combinación lineal de las variables originales que maximiza la varianza explicada en los datos, y los componentes principales se ordenan de acuerdo con la cantidad de varianza explicada.
+
+El PCA se utiliza a menudo para visualizar patrones o tendencias en los datos y para evaluar la relación entre las variables originales. También se puede utilizar para seleccionar un subconjunto de variables importantes para un análisis posterior, como el análisis de regresión o la clasificación.
+
+FactorMineR es un paqute en R que proporciona un conjunto de funciones y herramientas para llevar a cabo análisis multivariados, incluyendo el análisis de componentes principales (PCA). Para llevar a cabo un análisis de PCA con FactorMineR, es necesario cargar los datos en R y utilizar la función "PCA" de la biblioteca FactorMineR.
+
+##### Preparacion
+
+```{r}
+library(FactoMineR)
+library(factoextra)
+```
+
+Antes de realizar nuestro PCA, covertiremos nuestra variable `Habitat` a factor.
+
+```{r}
+bettles$Habitat <- factor(bettles$Habitat)
+```
+
+Algunas veces necesitaremos estandarizar las variables
+
+```{r}
+bettles_stan <- scale(bettles[,1:48])
+```
+
+Ahora realizamos el PCA
+
+```{r}
+bettles_pca <- PCA(bettles_stan, scale.unit = TRUE, ncp = 5)
+```
+
+
+
+##### Grafico
+
+```{r}
+
+fviz_pca_biplot(bettles_pca, 
+                axes = c(1,2),
+                habillage = bettles$Habitat,
+                addEllipses = TRUE,
+                geom = FALSE,
+                arrow = FALSE) +
+                theme_classic()
+```
+
+
+
+
+#### NMDS{.tabset .tabset-pills}
+
+El escalado no métrico multidimensional (NMDS, por sus siglas en inglés) es una técnica de análisis multivariado que se utiliza para representar gráficamente la similitud o diferencia entre grupos de muestras o observaciones en un espacio multidimensional. A diferencia del análisis de componentes principales (PCA), que es un método métrico que se basa en la correlación entre las variables, el NMDS es un método no métrico que no asume ningún tipo de relación lineal entre las variables. En su lugar, se basa en la similitud de patrones entre las muestras o observaciones, lo que lo hace útil para visualizar la similitud o diferencia entre diferentes grupos de muestras.
+
+El NMDS se utiliza a menudo en ecología y otras disciplinas para evaluar la similitud entre las comunidades de especies en diferentes áreas o para evaluar la similitud entre diferentes comunidades de microorganismos. También se puede utilizar para evaluar la similitud entre diferentes grupos de individuos en términos de sus características o comportamientos.
+
+Para llevar a cabo un análisis de NMDS, se necesitan datos de similitud o dissimilaridad entre las muestras o observaciones. Estos datos pueden obtenerse a partir de medidas de similitud o dissimilaridad entre las muestras, como la distancia euclidiana o la distancia de Bray-Curtis. Una vez que se tienen los datos de similitud o dissimilaridad, se puede utilizar un software de análisis multivariado para llevar a cabo el análisis de NMDS y visualizar los resultados en un gráfico en dos o tres dimensiones.
+
+##### Preparacion
+
+```{r, message=FALSE}
+
+library(vegan)
+
+bettles_nmds <- metaMDS(bettles[,1:48], 
+                        distance = "bray", 
+                        k= 2, trymax = 999)
+```
+
+Una vez listo el nmds, revisaremos el stress
+
+```{r}
+bettles_nmds$stress
+```
+
+##### Grafico
+
+Para graficar nuestro nmds con ggplot2 es necesario preparar nuestra base de datos.
+
+```{r}
+NMDS_habitat <- data.frame(Habitat = bettles$Habitat,
+                           bettles_nmds$points)
+
+NMDS_habitat
+```
+
+Ahora podemos preparar la tabla para especies de escarabajos
+
+
+```{r}
+NMDS_especies <- data.frame(Especies = colnames(bettles[,1:48]),
+                           bettles_nmds$species)
+
+NMDS_especies
+```
+
+Ahora graficaremos
+
+```{r}
+ggplot()+
+  geom_point(data= NMDS_habitat, aes(x= MDS1, y= MDS2, color = Habitat))+
+  stat_ellipse(data= NMDS_habitat, aes(x= MDS1, y= MDS2, fill = Habitat),
+               alpha = 0.3, geom = "polygon")+
+  geom_text(data= NMDS_especies, aes(x= MDS1, y= MDS2, label = Especies),
+             size= 2)+
+  theme_bw()
+  
+```
+
+
+#### PERMANOVA
+
+PERMANOVA es un método de análisis de la varianza multivariante que se utiliza para evaluar la similitud o diferencias entre grupos de muestras en una o más variables categóricas o continúas. Se basa en el análisis de la varianza univariante (ANOVA), pero es más adecuado para datos multivariantes en los que hay más de una variable dependiente.
+
+El método de PERMANOVA permite comparar grupos de muestras en términos de la similitud o diferencias de sus patrones de variación en un conjunto de variables. Se puede utilizar para evaluar si hay diferencias significativas entre grupos de muestras en un conjunto de variables y si hay una asociación entre estas variables y la variable categórica independiente.
+
+El método de PERMANOVA se puede aplicar a cualquier tipo de datos multivariantes, incluyendo datos de composición química, datos de secuenciación de ADN, datos de imágenes y datos de mediciones físicas o químicas. Se puede utilizar para evaluar la similitud o diferencias entre grupos de muestras en una amplia variedad de contextos, como la ecología, la biología molecular y la ingeniería.
+
+En R, el método de PERMANOVA se puede realizar mediante el uso de la función adonis del paquete vegan.
+
+```{r}
+bettles_per <- adonis2(bettles[ , 1:48] ~ Habitat, data = bettles)
+
+bettles_per
+```
+
+
+Prueba de contraste
+
+```{r}
+library(RVAideMemoire)
+bettles_per_con <- pairwise.perm.manova(dist(bettles[,1:48]), bettles$Habitat,
+                                        nperm = 999)
+
+bettles_per_con
+```
+
+

@@ -1,8 +1,37 @@
 ---
-title: 'Clase 9: Repaso, Preguntas y respuestas'
+title: 'Clase 9: Analisis Multivariado Parte 2'
+subtitle: 'ANOSIM, MRPP, SIMPER e Indicador de Especies'
 output:
   html_document:
-    df_print: paged
+         css: custom.css
 ---
 
-Proximamente...
+### Introduccion {.tabset .tabset-pills}
+
+El análisis multivariado de similitud es una técnica de análisis multivariado que se utiliza en ecología y otras disciplinas para evaluar la similitud o diferencia entre grupos de muestras o observaciones. Esta técnica se basa en el uso de medidas de similitud o dissimilaridad, como la distancia euclidiana o la distancia de Bray-Curtis, para calcular la similitud o diferencia entre las muestras o observaciones.
+
+#### ANOSIM
+
+ANOSIM (Analysis of Similarities) es un método de análisis multivariante que se utiliza para evaluar la similitud o diferencias entre grupos de muestras en una o más variables categóricas o continúas. Se basa en el análisis de la varianza univariante (ANOVA), pero es más adecuado para datos multivariantes en los que hay más de una variable dependiente.
+
+El método de ANOSIM permite comparar grupos de muestras en términos de la similitud o diferencias de sus patrones de variación en un conjunto de variables. Se puede utilizar para evaluar si hay diferencias significativas entre grupos de muestras en un conjunto de variables y si hay una asociación entre estas variables y la variable categórica independiente.
+
+#### MRPP
+
+El método de Multi Response Permutation Procedure (MRPP) es una herramienta de análisis multivariante que se utiliza para evaluar la similitud o diferencias entre grupos de muestras en una o más variables categóricas o continúas. Se basa en el análisis de la varianza univariante (ANOVA), pero es más adecuado para datos multivariantes en los que hay más de una variable dependiente.
+
+El método de MRPP permite comparar grupos de muestras en términos de la similitud o diferencias de sus patrones de variación en un conjunto de variables. Se puede utilizar para evaluar si hay diferencias significativas entre grupos de muestras en un conjunto de variables y si hay una asociación entre estas variables y la variable categórica independiente.
+
+#### SIMPER
+
+SIMPER (Similarity Percentages) es un método de análisis multivariante que se utiliza para evaluar la similitud o diferencias entre grupos de muestras en una o más variables categóricas o continúas. Se basa en el análisis de la varianza univariante (ANOVA), pero es más adecuado para datos multivariantes en los que hay más de una variable dependiente.
+
+El método de SIMPER permite comparar grupos de muestras en términos de la similitud o diferencias de sus patrones de variación en un conjunto de variables. Se puede utilizar para evaluar si hay diferencias significativas entre grupos de muestras en un conjunto de variables y si hay una asociación entre estas variables y la variable categórica independiente.
+
+#### Indicador de especies
+
+Determinar la ocurrencia o abundancia de un pequeño conjunto de especies indicadoras, como alternativa a muestrear toda la comunidad, ha resultado particularmente útil en la monitorización ambiental a largo plazo para la conservación o el manejo ecológico. Las especies se eligen como indicadores si:
+
+reflejan el estado biótico o abiótico del entorno;
+proporcionan evidencia de los impactos del cambio ambiental; o
+predicen la diversidad de otras especies, táxones o comunidades dentro de un área.
