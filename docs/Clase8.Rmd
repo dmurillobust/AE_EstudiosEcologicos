@@ -156,14 +156,34 @@ El método de PERMANOVA se puede aplicar a cualquier tipo de datos multivariante
 
 En R, el método de PERMANOVA se puede realizar mediante el uso de la función adonis del paquete vegan.
 
+**Ejemplo**
+
+:::{.notes}
+
 ```{r}
 bettles_per <- adonis2(bettles[ , 1:48] ~ Habitat, data = bettles)
 
 bettles_per
 ```
+El estadístico `F` mide la relación entre la varianza explicada por el modelo y la varianza no explicada por el modelo. Se calcula como la relación entre la varianza media de los grupos y la varianza media de los residuales.
+
+Un valor alto de F indica que hay una gran diferencia entre la varianza explicada por el modelo y la varianza no explicada, lo que sugiere que el modelo es un buen ajuste para los datos. Por el contrario, un valor bajo de F indica que hay poca diferencia entre la varianza explicada y la no explicada, lo que sugiere que el modelo no es un buen ajuste para los datos.
 
 
-Prueba de contraste
+`El coeficiente de determinación (R²)` es una medida de qué tan bien un modelo se ajusta a los datos. En el contexto de un análisis de varianza multivariado permutado (PERMANOVA), R² se utiliza para evaluar qué tan bien el modelo de PERMANOVA se ajusta a los datos.
+
+El valor de R² se calcula como la relación entre la varianza total explicada por el modelo y la varianza total de los datos. Un valor de R² cercano a 1 indica un ajuste muy bueno del modelo a los datos, mientras que un valor de R² cercano a 0 indica un ajuste pobre.
+
+El R² para los residuales mide qué tan bien el modelo se ajusta a los datos excluyendo la varianza explicada por el efecto de los factores. Es decir, mide la proporción de varianza total que no es explicada por el modelo. Un valor alto de R² para los residuales indica un ajuste pobre del modelo a los datos, mientras que un valor bajo indica un ajuste bueno.
+
+El R² para el total mide qué tan bien el modelo se ajusta a los datos incluyendo la varianza explicada por el efecto de los factores. Es decir, mide la proporción de varianza total explicada por el modelo. Un valor alto de R² para el total indica un ajuste muy bueno del modelo a los datos, mientras que un valor bajo indica un ajuste pobre.
+
+:::
+
+
+**Prueba de contraste**
+
+:::{.notes}
 
 ```{r}
 library(RVAideMemoire)
@@ -173,4 +193,5 @@ bettles_per_con <- pairwise.perm.manova(dist(bettles[,1:48]), bettles$Habitat,
 bettles_per_con
 ```
 
+:::
 

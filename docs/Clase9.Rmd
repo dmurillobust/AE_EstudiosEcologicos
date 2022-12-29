@@ -36,7 +36,13 @@ El método de ANOSIM permite comparar grupos de muestras en términos de la simi
 ```{r}
 library(vegan)
 library(indicspecies)
+```
 
+**Ejemplo para correr anosim en R**
+
+:::{.notes}
+
+```{r}
 bettles_anosim <- anosim(bettles[,1:48], bettles$Habitat, permutations = 999, distance = "bray")
 
 bettles_anosim
@@ -45,6 +51,9 @@ plot(bettles_anosim)
 
 ```
 
+Los resultados del análisis incluyen el valor de R (un valor entre -1 y 1 que indica la fuerza de la relación entre los grupos) y el valor de p. Si el valor de p es menor que un alpha (por ejemplo, 0.05), entonces podemos decir que hay diferencias significativas entre los grupos.
+
+:::
 
 #### MRPP
 
@@ -52,6 +61,9 @@ El método de Multi Response Permutation Procedure (MRPP) es una herramienta de 
 
 El método de MRPP permite comparar grupos de muestras en términos de la similitud o diferencias de sus patrones de variación en un conjunto de variables. Se puede utilizar para evaluar si hay diferencias significativas entre grupos de muestras en un conjunto de variables y si hay una asociación entre estas variables y la variable categórica independiente.
 
+**Ejemplo de mrpp en R**
+
+:::{.notes}
 
 ```{r}
 bettles_mrpp <- mrpp(bettles[,1:48], bettles$Habitat, permutations = 999, distance = "bray")
@@ -59,6 +71,18 @@ bettles_mrpp <- mrpp(bettles[,1:48], bettles$Habitat, permutations = 999, distan
 bettles_mrpp
 ```
 
+el valor "A" se utiliza para medir la disimilitud intrasistemas, mientras que el valor "delta" se utiliza para medir la disimilitud intersistemas.
+
+La disimilitud intrasistemas se refiere a la disimilitud o similitud promedio entre todas las sitios de observaciones dentro de cada grupo. Por ejemplo, en el habitat de borde `E`, si queremos saber si hay diferencias significativas entre los sitios de muestreo de `E`, podríamos medir la disimilitud intrasistemas comparando la similitud promedio entre todas los sitios de muestreo, que en este caso es 0.1325.
+
+La disimilitud intersistemas, por otro lado, se refiere a la disimilitud o similitud promedio entre todas los sitios de observaciones entre los habitats. Qu en este caso es 0.3657. Como solo tenemos un valor para la disimilitud intersistema, necesitaremos una prueba de contraste.
+
+:::
+
+
+**Prueba de contraste basada en mrpp en R**
+
+:::{.notes}
 
 ```{r}
 contraste_mrpp <- meandist(vegdist(bettles[,1:48], method = "bray"), bettles$Habitat)
@@ -68,6 +92,7 @@ contraste_mrpp
 plot(contraste_mrpp)
 ```
 
+:::
 
 #### SIMPER
 
@@ -75,16 +100,22 @@ SIMPER (Similarity Percentages) es un método de análisis multivariante que se 
 
 El método de SIMPER permite comparar grupos de muestras en términos de la similitud o diferencias de sus patrones de variación en un conjunto de variables. Se puede utilizar para evaluar si hay diferencias significativas entre grupos de muestras en un conjunto de variables y si hay una asociación entre estas variables y la variable categórica independiente.
 
+**Ejemplo de simper en R**
+
+:::{.notes}
+
 ```{r}
 bettles_simper <- simper(bettles[,1:48], bettles$Habitat, permutations = 999)
 bettles_simper
 
 ```
-- Variable: The name of the variable
+La contribución se refiere al porcentaje de contribución de la variable al desimilaridad global entre los grupos. Por ejemplo, si la contribución de una variable es del 50%, significa que esa variable es responsable de la mitad de la desimilaridad entre los grupos.
 
-- Contribution: The percentage contribution of the variable to the overall dissimilarity between the groups
+El SE.Contribución (error estándar de la contribución) es una medida de la precisión de la contribución de la variable. Es decir, mide cuán cerca está la contribución real de la variable de la contribución estimada. A mayor SE.Contribución, mayor incertidumbre en cuanto a la contribución real de la variable.
 
-- SE.Contribution: The standard error of the contribution of the variable to the overall dissimilarity between the groups
+Es importante tener en cuenta que el SIMPER es una herramienta de análisis de datos que se utiliza para identificar qué variables están contribuyendo de manera significativa a la desimilaridad entre dos o más grupos. Es útil para entender qué variables son las más importantes en la diferenciación entre los grupos y para identificar posibles patrones o tendencias en los datos.
+
+:::
 
 #### Indicador de especies
 
@@ -94,9 +125,16 @@ reflejan el estado biótico o abiótico del entorno;
 proporcionan evidencia de los impactos del cambio ambiental; o
 predicen la diversidad de otras especies, táxones o comunidades dentro de un área.
 
+**Ejemplo en R**
+
+:::{.notes}
+
 ```{r}
 bettles_indicadores <- multipatt(bettles[,1:48], bettles$Habitat, control = how(nperm = 999))
 
 summary(bettles_indicadores)
 ```
 
+El estadístico "stat" se refiere a cualquier estadístico o medida de rendimiento incluida en los resultados del análisis de patrones múltiples (puede estar en un rango de 0 a 1). Estos estadísticos y medidas de rendimiento pueden ser útiles para interpretar los resultados del análisis y evaluar la precisión de la predicción de la variable de respuesta a partir de las variables predictivas.
+
+:::
