@@ -11,7 +11,7 @@
 
 
 
-<title>Introduccion al curso</title>
+<title>Introducción al curso</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1525,6 +1525,7 @@ if (window.hljs) {
 
 
 
+
 <style type="text/css">
 .main-container {
 max-width: 940px;
@@ -1546,6 +1547,9 @@ outline: none;
 summary {
 display: list-item;
 }
+details > summary > p:only-child {
+display: inline;
+}
 pre code {
 padding: 0;
 }
@@ -1564,23 +1568,17 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -1621,14 +1619,16 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Introduccion al curso</h1>
+<h1 class="title toc-ignore">Introducción al curso</h1>
 
 </div>
 
 
-<p>Por favor visite el sitio web oficial de
-<code>HN Biology Investigation</code> para que pueda acceder a los
-materiales, grabaciones de clases.</p>
+<p>Este curso es brindado de forma gratuita por el personal de
+<code>HN Biology Investigation</code> con el fin de promover el
+desarrollo de investigaciones relacionadas con la ecología en Honduras.
+Te invitamos a acceder a los recursos y videos de las clases sin costo
+alguno.</p>
 <p>Sitio web: <a href="https://www.hnbiology.org/analisisestadisticoecologia">Curso
 oficial</a></p>
 <p>Base de datos y presentaciones: <a href="https://drive.google.com/drive/folders/11VIzUGC6mDW-RJh-nMOAoIXZmg4rnsTF?usp=sharing">Materiales</a></p>

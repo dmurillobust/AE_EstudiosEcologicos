@@ -5,7 +5,7 @@ output:
          css: custom.css
 ---
 
-Esta clase esta diseñada para aprender los comandos básicos en R, la creación de variables, tablas, el ingreso de base de datos y análisis exploración de datos.
+Este clase está diseñado para enseñarte los comandos básicos en R, incluyendo la creación de variables, tablas y el ingreso y análisis de bases de datos. Además, aprenderás a explorar y analizar tus datos de manera efectiva. Con el tiempo, podrás utilizar estas habilidades básicas de R para realizar análisis más complejos y obtener resultados valiosos de tus datos.
 
 
 ### Contenido {.tabset .tabset-pills}

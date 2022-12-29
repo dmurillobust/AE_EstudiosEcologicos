@@ -1,11 +1,11 @@
 ---
-title: "Introduccion al curso"
+title: "Introducción  al curso"
 output:
   html_document:
     df_print: paged
 ---
 
-Por favor visite el sitio web oficial de `HN Biology Investigation` para que pueda acceder a los materiales, grabaciones de clases.
+Este curso es brindado de forma gratuita por el personal de `HN Biology Investigation` con el fin de promover el desarrollo de investigaciones relacionadas con la ecología en Honduras. Te invitamos a acceder a los recursos y videos de las clases sin costo alguno.
 
 Sitio web: [Curso oficial](https://www.hnbiology.org/analisisestadisticoecologia)
 

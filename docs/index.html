@@ -11,7 +11,7 @@
 
 
 
-<title>Curso de Anlaisis Estadistico enfocado a Estudios Ecologicos</title>
+<title>Curso de Análisis Estadístico para Estudios Ecológicos</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1525,6 +1525,7 @@ if (window.hljs) {
 
 
 
+
 <style type="text/css">
 .main-container {
 max-width: 940px;
@@ -1546,6 +1547,9 @@ outline: none;
 summary {
 display: list-item;
 }
+details > summary > p:only-child {
+display: inline;
+}
 pre code {
 padding: 0;
 }
@@ -1564,23 +1568,17 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -1621,16 +1619,24 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Curso de Anlaisis Estadistico enfocado a
-Estudios Ecologicos</h1>
+<h1 class="title toc-ignore">Curso de Análisis Estadístico para Estudios
+Ecológicos</h1>
 
 </div>
 
 
-<p>Bienvenidos este curso esta disenado para los profesionales,
-estudiastes y personas interesadas en Ecologia.</p>
-<div id="contenido-del-curso" class="section level2">
-<h2>Contenido del curso</h2>
+<p>Bienvenidos a este curso diseñado para profesionales, estudiantes y
+personas interesadas en la Ecología. En este curso, exploraremos las
+técnicas estadísticas utilizadas en el análisis de datos ecológicos y
+cómo aplicarlas para evaluar la significación de las diferencias entre
+grupos, identificar patrones y tendencias en los datos y explorar las
+relaciones entre las variables. A través de ejemplos y ejercicios
+prácticos, aprenderás a utilizar diferentes métodos estadísticos y a
+analizar y visualizar los datos de manera efectiva. Si tienes un interés
+en la Ecología y quieres aprender a utilizar las herramientas
+estadísticas para analizar tus datos, ¡este curso es para ti!</p>
+<div id="contenido" class="section level3">
+<h3>Contenido</h3>
 <p><a href="Introduccion.html">Introduccion al curso</a></p>
 <p><a href="Clase1.html">Clase 1: Comandos basicos en R y uso de
 scripts</a></p>
