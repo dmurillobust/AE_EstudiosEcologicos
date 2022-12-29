@@ -1,9 +1,19 @@
 ---
-title: 'Clase 1: Comandos basicos en R y uso de scripts'
+title: ''
 output: 
        html_document:
          css: custom.css
+header-includes:
+  - \usepackage{float}
+  - \floatstyle{boxed}
+  - \restylefloat{figure}
+  
 ---
+
+<div style="display:flex; align-items:center;">
+  <h1 style="margin:0;">Clase 1: Comandos básicos en R y uso de scripts</h1>
+  <img src="imagenes/HNBI_LOGO2.jpg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
+</div>
 
 Este clase está diseñado para enseñarte los comandos básicos en R, incluyendo la creación de variables, tablas y el ingreso y análisis de bases de datos. Además, aprenderás a explorar y analizar tus datos de manera efectiva. Con el tiempo, podrás utilizar estas habilidades básicas de R para realizar análisis más complejos y obtener resultados valiosos de tus datos.
 

@@ -1,9 +1,19 @@
 ---
-title: 'Clase 3: Analisis de Variaza y Prueba Correlacion'
+title: ''
 output:
    html_document:
          css: custom.css
+header-includes:
+  - \usepackage{float}
+  - \floatstyle{boxed}
+  - \restylefloat{figure}
+  
 ---
+
+<div style="display:flex; align-items:center;">
+  <h1 style="margin:0;">Clase 3: Analisis de Variaza y Prueba Correlacion</h1>
+  <img src="imagenes/HNBI_LOGO2.jpg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
+</div>
 
 
 ### Contenido{.tabset .tabset-pills}

@@ -32,12 +32,11 @@ Bienvenidos a este curso diseñado para profesionales, estudiantes y personas in
 
 [Clase 7: Modelos lineales Generalizados: Binomial](Clase7.html)
 
-[Clase 8: Anaisis de escalado multidemencional y PCA](Clase8.html)
+[Clase 8: NMDS, PCA y PERMANOVA](Clase8.html)
 
-[Clase 9: Analisis de similitud, Permanova, MRPP e Indicador de especies](Clase9.html)
+[Clase 9: Anosim, MRPP, SIMPER e Indicador de especies](Clase9.html)
 
 [Clase 10: Repaso, Preguntas y respuestas](Clase10.html)
-
 
 
 ![](imagenes/HNBI2_LOGO.jpg)

@@ -1,9 +1,19 @@
 ---
-title: 'Clase 4: Pruebas no parametricas'
+title: ''
 output:
   html_document:
          css: custom.css
+header-includes:
+  - \usepackage{float}
+  - \floatstyle{boxed}
+  - \restylefloat{figure}
+  
 ---
+
+<div style="display:flex; align-items:center;">
+  <h1 style="margin:0;">Clase 4: Pruebas no parametricas</h1>
+  <img src="imagenes/HNBI_LOGO2.jpg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
+</div>
 
 Las pruebas no paramétricas son un conjunto de técnicas de prueba estadística que se utilizan para evaluar hipótesis sobre una población cuando no se tienen suficientes datos para suponer una distribución particular de los datos. A diferencia de las pruebas paramétricas, que asumen una distribución particular de los datos (como la distribución normal), las pruebas no paramétricas no requieren ninguna suposición sobre la distribución de los datos.
 

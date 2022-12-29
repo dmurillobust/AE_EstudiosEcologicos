@@ -1,9 +1,19 @@
 ---
-title: 'Clase 6: Modelos lineales Generalizados: Poisson'
+title: 'Clase 6: Modelos lineales Generalizados'
 output:
   html_document:
          css: custom.css
+header-includes:
+  - \usepackage{float}
+  - \floatstyle{boxed}
+  - \restylefloat{figure}
+  
 ---
+
+<div style="display:flex; align-items:center;">
+  <h1 style="margin:0;">Conteos: Poisson</h1>
+  <img src="imagenes/HNBI_LOGO2.jpg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
+</div>
 
 Los modelos lineales generalizados (GLM) son una clase de modelos estadísticos que se utilizan para describir la relación entre una variable dependiente y una o más variables independientes. A diferencia de los modelos lineales tradicionales, los modelos lineales generalizados no asumen que la relación entre las variables es lineal y permiten la utilización de una distribución de error no normal para la variable dependiente.
 

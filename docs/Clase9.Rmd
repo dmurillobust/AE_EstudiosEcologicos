@@ -1,10 +1,19 @@
 ---
 title: 'Clase 9: Analisis Multivariado Parte 2'
-subtitle: 'ANOSIM, MRPP, SIMPER e Indicador de Especies'
 output:
   html_document:
          css: custom.css
+header-includes:
+  - \usepackage{float}
+  - \floatstyle{boxed}
+  - \restylefloat{figure}
+  
 ---
+
+<div style="display:flex; align-items:center;">
+  <h1 style="margin:0;">ANOSIM, MRPP, SIMPER e Indicador de Especies</h1>
+  <img src="imagenes/HNBI_LOGO2.jpg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
+</div>
 
 ### Introduccion {.tabset .tabset-pills}
 

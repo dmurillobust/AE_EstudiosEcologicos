@@ -1,8 +1,18 @@
 ---
-title: 'Clase 10: Repaso, Preguntas y respuestas'
+title: ''
 output:
   html_document:
     df_print: paged
+header-includes:
+  - \usepackage{float}
+  - \floatstyle{boxed}
+  - \restylefloat{figure}
+  
 ---
+
+<div style="display:flex; align-items:center;">
+  <h1 style="margin:0;">Clase 10: Repaso, Preguntas y respuestas</h1>
+  <img src="imagenes/HNBI_LOGO2.jpg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
+</div>
 
 Proximamente...

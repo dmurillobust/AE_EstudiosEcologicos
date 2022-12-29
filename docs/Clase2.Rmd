@@ -1,9 +1,19 @@
 ---
-title: 'Clase 2: Analisis de Diversidad'
+title: ''
 output:
   html_document:
          css: custom.css
+header-includes:
+  - \usepackage{float}
+  - \floatstyle{boxed}
+  - \restylefloat{figure}
+  
 ---
+
+<div style="display:flex; align-items:center;">
+  <h1 style="margin:0;">Clase 2: Analisis de Diversidad</h1>
+  <img src="imagenes/HNBI_LOGO2.jpg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
+</div>
 
 
 El contenido de esta clase se basara mayoritariamente en el libro `Community Ecology Analytical Methods Using R and Excel` by `Mark Gardener`

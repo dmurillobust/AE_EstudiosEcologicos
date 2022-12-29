@@ -1,9 +1,19 @@
 ---
-title: 'Clase 7: Modelos lineales Generalizados: Binomial'
+title: 'Clase 7: Modelos lineales Generalizados'
 output:
   html_document:
          css: custom.css
+header-includes:
+  - \usepackage{float}
+  - \floatstyle{boxed}
+  - \restylefloat{figure}
+  
 ---
+
+<div style="display:flex; align-items:center;">
+  <h1 style="margin:0;">Ocupancia: Binomial</h1>
+  <img src="imagenes/HNBI_LOGO2.jpg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
+</div>
 
 
 Un modelo lineal general (GLM) con una distribución binomial se utiliza para modelar datos de respuesta binaria, es decir, datos que tienen solo dos posibles resultados, como sí/no, verdadero/falso o exitoso/fracasado. La distribución binomial se basa en la ley de Bernoulli, que describe el comportamiento de una secuencia de eventos independientes y binarios.

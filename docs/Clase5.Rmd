@@ -1,9 +1,19 @@
 ---
-title: 'Clase 5: Modelos lineales'
+title: ''
 output:
    html_document:
          css: custom.css
+header-includes:
+  - \usepackage{float}
+  - \floatstyle{boxed}
+  - \restylefloat{figure}
+  
 ---
+
+<div style="display:flex; align-items:center;">
+  <h1 style="margin:0;">Clase 5: Modelos lineales</h1>
+  <img src="imagenes/HNBI_LOGO2.jpg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
+</div>
 
 Los modelos lineales son un tipo de modelo estadístico utilizado para predecir el valor de una variable de interés (la variable dependiente) a partir de uno o más variables predictivas (las variables independientes). Los modelos lineales se basan en la suposición de que la relación entre la variable dependiente y las variables independientes es lineal.
 
