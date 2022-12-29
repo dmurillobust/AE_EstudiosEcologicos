@@ -12,8 +12,7 @@ El análisis multivariado de similitud es una técnica de análisis multivariado
 
 #### Base de datos
 
-Para esta clase utilizaremos la base de datos `bettles.txt`. Estos datos muestran las abundancias de escarabajos en tres tipos de hábitat en el Reino Unido. Hay 6 réplicas para cada hábitat (Wood, Grass, Edge). El conjunto de datos asociado muestra la altura de la vegetación y el tipo de hábitat de cada muestra
-
+Para esta clase utilizaremos la base de datos `bettles.txt`. Estos datos muestran las abundancias de escarabajos en tres tipos de hábitat en el Reino Unido. Hay 6 réplicas para cada hábitat (Wood, Grass, Edge). 
 
 ```{r, echo=FALSE}
 library(here)
